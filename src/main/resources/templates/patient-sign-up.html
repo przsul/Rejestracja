@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Sign Up</title>
+</head>
+
+<body>
+    <form action="#" th:action="@{/patient/add}" th:object="${patient}" method="post">
+        <label for="email">E-mail</label>
+        <br>
+        <input type="text" th:field="*{email}" id="email" placeholder="E-mail">
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        <br>
+
+        <label for="password">Password</label>
+        <br>
+        <input type="password" th:field="*{password}" id="password" placeholder="Password">
+        <br>
+
+        <label for="firstName">First Name</label>
+        <br>
+        <input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name">
+        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+        <br>
+
+        <label for="lastName">Last Name</label>
+        <br>
+        <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
+        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+        <br>
+
+        <label for="pesel">PESEL</label>
+        <br>
+        <input type="text" th:field="*{pesel}" id="pesel" placeholder="Pesel">
+        <span th:if="${#fields.hasErrors('pesel')}" th:errors="*{pesel}"></span>
+        <br>
+        
+        <!-- <label for="pesel">Type of user</label>
+        <br>
+        <select th:field="*{type}">
+            <option value="Patient" th:text="Patient"></option>
+            <option value="Doctor" th:text="Doctor"></option>
+        </select>
+        <br> -->
+
+        <input type="submit" value="Sign Up">
+        <br>
+
+        <ul th:each="error: ${#fields.errors('password')}">
+            <li th:each="message : ${error.split(',')}">
+                <p th:text="${message}"></p>
+            </li>
+        </ul> 
+    </form>
+</body>
+</html>

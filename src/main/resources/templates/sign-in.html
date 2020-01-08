@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Sign In</title>
+    <title>Sign In</title>
 </head>
 <body>
-    <form action="#" th:action="@{/adminPanel}" th:object="${admin}" method="post">
+    <form action="#" th:action="@{/panel}" th:object="${login}" method="post">
         <label for="email">E-mail</label>
         <br>
         <input type="text" th:field="*{email}" id="email" placeholder="E-mail">
@@ -15,10 +15,16 @@
         <label for="password">Password</label>
         <br>
         <input type="password" th:field="*{password}" id="password" placeholder="Password">
-        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
         <br>
 
-        <input type="submit" value="Sign In">   
+        <input type="submit" value="Sign In">
+        <br>
+        
+        <ul th:each="error: ${#fields.errors('password')}">
+            <li th:each="message : ${error.split(',')}">
+                <p th:text="${message}"></p>
+            </li>
+        </ul> 
     </form>
 </body>
 </html>
