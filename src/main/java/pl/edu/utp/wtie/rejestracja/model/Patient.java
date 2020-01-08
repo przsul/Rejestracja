@@ -5,34 +5,40 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.pl.PESEL;
 
 import lombok.Data;
+import pl.edu.utp.wtie.rejestracja.constraints.ValidPassword;
 
 /**
- * User
+ * Patient
  */
 @Entity
 @Data
-public class User {
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotBlank(message = "Password is mandatory")
+    @ValidPassword
     private String password;
 
     @NotBlank(message = "E-mail is mandatory")
     @Column(unique = true)
+    @Email(message = "Wrong e-mail address")
     private String email;
 
-    @NotBlank(message = "First name is mandatory")
+    @Size(min = 1, max = 25)
     private String firstName;
 
-    @NotBlank(message = "Last name is mandatory")
+    @Size(min = 1, max = 25)
     private String lastName;
 
-    @NotBlank(message = "PESEL is mandatory")
+    @PESEL(message = "Wrong PESEL")
     private String pesel;
 }

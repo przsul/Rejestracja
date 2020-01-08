@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>User Sign Up</title>
+    <title>Doctor Sign Up</title>
 </head>
+
 <body>
-    <form action="#" th:action="@{/addUser}" th:object="${user}" method="post">
+    <form action="#" th:action="@{/doctor/add}" th:object="${doctor}" method="post">
         <label for="email">E-mail</label>
         <br>
         <input type="text" th:field="*{email}" id="email" placeholder="E-mail">
@@ -14,8 +16,7 @@
 
         <label for="password">Password</label>
         <br>
-        <input type="text" th:field="*{password}" id="password" placeholder="Password">
-        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+        <input type="password" th:field="*{password}" id="password" placeholder="Password">
         <br>
 
         <label for="firstName">First Name</label>
@@ -36,7 +37,22 @@
         <span th:if="${#fields.hasErrors('pesel')}" th:errors="*{pesel}"></span>
         <br>
         
-        <input type="submit" value="Sign Up">   
+        <!-- <label for="pesel">Type of user</label>
+        <br>
+        <select th:field="*{type}">
+            <option value="Patient" th:text="Patient"></option>
+            <option value="Doctor" th:text="Doctor"></option>
+        </select>
+        <br> -->
+
+        <input type="submit" value="Sign Up">
+        <br>
+
+        <ul th:each="error: ${#fields.errors('password')}">
+            <li th:each="message : ${error.split(',')}">
+                <p th:text="${message}"></p>
+            </li>
+        </ul> 
     </form>
 </body>
 </html>
