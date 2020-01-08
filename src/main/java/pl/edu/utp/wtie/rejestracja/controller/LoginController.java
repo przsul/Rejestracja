@@ -1,5 +1,6 @@
 package pl.edu.utp.wtie.rejestracja.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -37,22 +38,46 @@ public class LoginController {
         return "sign-in";
     }
 
+    @GetMapping("/panel")
+    public String showLoggedPanel(HttpSession session) {
+        if (session.getAttribute("doctor-logged") != null)
+            return "doctor-panel";
+        if (session.getAttribute("patient-logged") != null)
+            return "patient-panel";
+
+        return "index";
+    }
+
     @PostMapping("/panel")
-    public String showPanel(@Valid Login login, BindingResult result, Model model, HttpSession session) {
+    public String showPanel(@Valid Login login, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors())
             return "sign-in";
 
         Iterable<Doctor> doctors = doctorRepository.findAll();
         for (Doctor d : doctors)
             if (d.getEmail().equals(login.getEmail()))
-                if (passwordEncoder.matches(login.getPassword(), d.getPassword()))
+                if (passwordEncoder.matches(login.getPassword(), d.getPassword())) {
+                    request.getSession().setAttribute("doctor-logged", login.getEmail());
                     return "doctor-panel";
+                }
 
         Iterable<Patient> patients = patientRepository.findAll();
         for (Patient p : patients)
             if (p.getEmail().equals(login.getEmail()))
-                if (passwordEncoder.matches(login.getPassword(), p.getPassword()))
+                if (passwordEncoder.matches(login.getPassword(), p.getPassword())) {
+                    request.getSession().setAttribute("patient-logged", login.getEmail());
                     return "patient-panel";
+                }
+
+        return "index";
+    }
+
+    @GetMapping("/signout")
+    public String signout(HttpSession session) {
+        if (session.getAttribute("patient-logged") != null)
+            session.removeAttribute("patient-logged");
+        if (session.getAttribute("doctor-logged") != null)
+            session.removeAttribute("doctor-logged");
 
         return "index";
     }
