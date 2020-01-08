@@ -1,5 +1,6 @@
 package pl.edu.utp.wtie.rejestracja.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +8,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import pl.edu.utp.wtie.rejestracja.model.Doctor;
 import pl.edu.utp.wtie.rejestracja.model.Patient;
@@ -36,36 +38,16 @@ public class PatientController {
         return "patient-sign-up";
     }
 
-    // @PostMapping("/userPanel")
-    // public String userPanel(@Valid User user, BindingResult result, Model model)
-    // {
-    // if (result.hasErrors())
-    // return "user-sign-up";
-
-    // Iterable<User> users = userRepository.findAll();
-    // for(User u : users)
-    // if(u.getEmail().equals(user.getEmail()))
-    // if(u.getPassword().equals(user.getPassword()))
-    // return "user-panel";
-
-    // return "index";
-    // }
-
-    @GetMapping("/patient/add")
-    public String addPatient() {
-        return "index";
-    }
-
     @PostMapping("/patient/add")
-    public String addPatient(@Valid Patient patient, BindingResult result, Model model) {
+    public ModelAndView addPatient(@Valid Patient patient, BindingResult result, ModelMap model, HttpServletRequest request) {
         if (result.hasErrors())
-            return "patient-sign-up";
+            return new ModelAndView("patient-sign-up", model);
 
         Iterable<Doctor> doctors = doctorRepository.findAll();
         for (Doctor d : doctors)
             if (d.getEmail().equals(patient.getEmail())) {
                 result.rejectValue("email", "error.patient", "An account already exists for this email.");
-                return "patient-sign-up";
+                return new ModelAndView("patient-sign-up", model);
             }
 
         try {
@@ -73,9 +55,10 @@ public class PatientController {
             patientRepository.save(patient);
         } catch (DataIntegrityViolationException e) {
             result.rejectValue("email", "error.patient", "An account already exists for this email.");
-            return "patient-sign-up";
+            return new ModelAndView("patient-sign-up", model);
         }
 
-        return "patient-panel";
+        request.getSession().setAttribute("patient-logged", patient.getEmail());
+        return new ModelAndView("redirect:/panel", model);
     }
 }
