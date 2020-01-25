@@ -48,6 +48,16 @@ public class LoginController {
         return "index";
     }
 
+    @GetMapping("/")
+    public String dontBack(HttpSession session) {
+        if (session.getAttribute("doctor-logged") != null)
+            return "doctor-panel";
+        if (session.getAttribute("patient-logged") != null)
+            return "patient-panel";
+
+        return "index";
+    }
+
     @PostMapping("/panel")
     public String showPanel(@Valid Login login, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors())
@@ -69,7 +79,8 @@ public class LoginController {
                     return "patient-panel";
                 }
 
-        return "index";
+        result.rejectValue("email", "error.login", "An account does not exists for this email.");
+        return "sign-in";
     }
 
     @GetMapping("/signout")
