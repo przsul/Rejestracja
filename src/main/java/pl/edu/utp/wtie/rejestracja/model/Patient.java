@@ -22,7 +22,7 @@ import pl.edu.utp.wtie.rejestracja.constraints.ValidPassword;
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ValidPassword
