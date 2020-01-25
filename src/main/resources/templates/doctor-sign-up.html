@@ -36,14 +36,30 @@
         <input type="text" th:field="*{pesel}" id="pesel" placeholder="Pesel">
         <span th:if="${#fields.hasErrors('pesel')}" th:errors="*{pesel}"></span>
         <br>
-        
-        <!-- <label for="pesel">Type of user</label>
+
+        <label for="specialization">Specjalizacja</label>
         <br>
-        <select th:field="*{type}">
-            <option value="Patient" th:text="Patient"></option>
-            <option value="Doctor" th:text="Doctor"></option>
-        </select>
-        <br> -->
+        <input type="text" th:field="*{specialization}" id="specialization" placeholder="specialization">
+        <span th:if="${#fields.hasErrors('specialization')}" th:errors="*{specialization}"></span>
+        <br>
+
+        <label for="city">Miejscowość</label>
+        <br>
+        <input type="text" th:field="*{city}" id="city" placeholder="city">
+        <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
+        <br>
+
+        <label for="currentHospital">Obecna placówka</label>
+        <br>
+        <input type="text" th:field="*{currentHospital}" id="currentHospital" placeholder="currentHospital">
+        <span th:if="${#fields.hasErrors('currentHospital')}" th:errors="*{currentHospital}"></span>
+        <br>
+
+        <label for="phone">Telefon</label>
+        <br>
+        <input type="text" th:field="*{phone}" id="phone" placeholder="currentHospital">
+        <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+        <br>
 
         <input type="submit" value="Sign Up">
         <br>

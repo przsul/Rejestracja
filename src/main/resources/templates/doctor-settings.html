@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Panel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <!-- Brand -->
+        <a class="navbar-brand" href="/panel">Logo</a>
+
+        <!-- Links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/panel/scheduler">Scheduler</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/panel/doctor-settings">Account Settings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/signout">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+<div class="container">
+    <form action="#" th:object="${doctor}" th:action= "@{/panel/doctor-settings}" method="post">
+        <div class="form-group">
+            <label for="specialization">Specialization</label>
+            <input type="text" th:field="*{specialization}" class="form-control" id="specialization" placeholder="" />
+        </div>
+        <div class="form-group">
+            <label for="currentHospital">Current Hospital</label>
+            <input type="text" th:field="*{currentHospital}" class="form-control" id="currentHospital" placeholder="" />
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" th:field="*{city}" class="form-control" id="city" placeholder="" />
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" th:field="*{phone}" class="form-control" id="phone" placeholder="" />
+        </div>
+        <button type="submit" value="Submit" class="btn btn-primary">Save</button>
+
+        <ul th:each="error: ${#fields.errors('phone')}">
+            <li th:each="message : ${error.split(',')}">
+                <p th:text="${message}"></p>
+            </li>
+        </ul>
+
+    </form>
+
+
+
+</div>
+</body>
+</html>

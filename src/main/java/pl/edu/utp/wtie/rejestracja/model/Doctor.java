@@ -9,6 +9,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.pl.PESEL;
 
 import lombok.Data;
@@ -41,4 +43,18 @@ public class Doctor {
 
     @PESEL(message = "Wrong PESEL")
     private String pesel;
+
+    @Size(min = 1, max = 255)
+    private String specialization;
+
+    @Size(min = 1, max = 255)
+    private String city;
+
+    @Size(min = 1, max = 255)
+    private String currentHospital;
+
+    @Size(min = 9, max = 9)
+    private String phone;
+
+
 }

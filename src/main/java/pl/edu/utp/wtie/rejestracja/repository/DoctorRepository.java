@@ -9,4 +9,6 @@ import pl.edu.utp.wtie.rejestracja.model.Doctor;
  * DoctorRepository
  */
 @Repository
-public interface DoctorRepository extends CrudRepository<Doctor, Long> {}
+public interface DoctorRepository extends CrudRepository<Doctor, Long> {
+    Doctor findByEmail(String email);
+}
