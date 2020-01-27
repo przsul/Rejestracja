@@ -53,14 +53,16 @@
         <div class="row mt-3">
             <div class="col" style="overflow-x: auto;width: 100px;">
                 <table class="table table-bordered">
-                    <thead id="days">
-                        <tr>
-                            <td th:each="appointment : ${doctorAppointments}" th:utext="${appointment.dayOfTheWeek + '<br>' + #dates.format(appointment.startDateTime,'dd.MM')}"></td>
-                        </tr>
-                    </thead>
                     <tbody id="appointments">
-                        <tr>
-                            <td><button class="btn btn-primary" th:each="appointment : ${doctorAppointments}" th:text="${#dates.format(appointment.startDateTime,'HH:mm')}"></button></td>
+                        <tr th:each="appointment : ${doctorAppointments}">
+                            <td 
+                                th:utext="${appointment.dayOfTheWeek + ', ' + #dates.format(appointment.startDateTime,'dd.MM.YY')}">
+                            </td>
+                            <td>
+                                <button class="btn btn-primary"
+                                        th:text="${#dates.format(appointment.startDateTime,'HH:mm') + ' - ' + #dates.format(appointment.startDateTime,'HH:mm')}">
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
