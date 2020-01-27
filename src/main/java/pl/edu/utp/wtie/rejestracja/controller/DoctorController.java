@@ -3,12 +3,17 @@ package pl.edu.utp.wtie.rejestracja.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.Message;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -32,6 +37,9 @@ import pl.edu.utp.wtie.rejestracja.repository.PatientRepository;
  */
 @Controller
 public class DoctorController {
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -80,12 +88,28 @@ public class DoctorController {
                 return new ModelAndView("doctor-sign-up", model);
             }
 
+        String passwordTmp = doctor.getPassword();
+
         try {
             doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
             doctorRepository.save(doctor);
         } catch (DataIntegrityViolationException e) {
             result.rejectValue("email", "error.doctor", "An account already exists for this email.");
             return new ModelAndView("doctor-sign-up", model);
+        }
+
+        MimeMessagePreparator preparator = mimeMessage -> {
+            mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(doctor.getEmail()));
+            mimeMessage.setFrom(new InternetAddress("zpo85876@gmail.com", "ZPO PROJECT"));
+            mimeMessage.setSubject("Registration");
+            mimeMessage.setText("Thanks <b>" + doctor.getFirstName() + "</b> for your registration!<br><br>" + "<b>You login:</b> "
+                    + doctor.getEmail() + "<br><b>Your password:</b> " + passwordTmp, "utf-8", "html");
+        };
+
+        try {
+            mailSender.send(preparator);
+        } catch (MailException ex) {
+            System.err.println(ex.getMessage());
         }
 
         request.getSession().setAttribute("doctor-logged", doctor.getEmail());
