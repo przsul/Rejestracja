@@ -9,4 +9,6 @@ import pl.edu.utp.wtie.rejestracja.model.Patient;
  * UserRepository
  */
 @Repository
-public interface PatientRepository extends CrudRepository<Patient, Long> {}
+public interface PatientRepository extends CrudRepository<Patient, Long> {
+    Patient findByEmail(String email);
+}

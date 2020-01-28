@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Scheduler</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <!-- Brand -->
+        <a class="navbar-brand" href="/panel">Logo</a>
+
+        <!-- Links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/panel/patient-scheduler">Scheduler</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/panel/doctor-settings">Account Settings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/signout">Logout</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div th:if="${not #lists.isEmpty(patientApointmens)}">
+            <h2>Twoje wizyty</h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>Imię i nazwisko doktora</th>
+                    <th>Data rozpoczęcia wizyty</th>
+                    <th>Data zakończenia wizyty</th>
+                    <th>Stan wizyty</th>
+                </tr>
+                <tr th:each="patientApointment : ${patientApointmens}">
+                    <td th:text="${patientApointment.doctor.firstName + ' ' + patientApointment.doctor.lastName}"></td>
+                    <td th:text="${patientApointment.startDateTime}"></td>
+                    <td th:text="${patientApointment.endDateTime}"></td>
+                    <td th:if="${patientApointment.booked} == true" th:text="Potwierdzona"></td>
+                    <td th:if="${patientApointment.booked} == false" th:text="Niepotwierdzona"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+<script th:src="@{/js/script.js}"></script>
+
+</html>

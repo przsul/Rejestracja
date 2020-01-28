@@ -27,6 +27,8 @@ public class Appointment {
     private Timestamp endDateTime;
 
     private String dayOfTheWeek;
+
+    private boolean isBooked;
     
     @ManyToOne
     private Doctor doctor;
@@ -37,12 +39,13 @@ public class Appointment {
     public Appointment() {}
 
     public Appointment(long id, Timestamp startDateTime, Timestamp endDateTime, Doctor doctor,
-            Patient patient) {
+            Patient patient, boolean isBooked) {
         this.id = id;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.doctor = doctor;
         this.patient = patient;
+        this.isBooked = isBooked;
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(startDateTime);

@@ -3,6 +3,7 @@ package pl.edu.utp.wtie.rejestracja.controller;
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +14,22 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.edu.utp.wtie.rejestracja.model.Appointment;
 import pl.edu.utp.wtie.rejestracja.model.Doctor;
 import pl.edu.utp.wtie.rejestracja.model.Patient;
+import pl.edu.utp.wtie.rejestracja.repository.AppointmentRepository;
 import pl.edu.utp.wtie.rejestracja.repository.DoctorRepository;
 import pl.edu.utp.wtie.rejestracja.repository.PatientRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * PatientController
@@ -40,6 +47,9 @@ public class PatientController {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
 
     @GetMapping("/patient/signup")
     public String showSignUpForm(Patient patient) {
@@ -84,5 +94,19 @@ public class PatientController {
 
         request.getSession().setAttribute("patient-logged", patient.getEmail());
         return new ModelAndView("redirect:/panel", model);
+    }
+    @GetMapping("/panel/patient-scheduler")
+    public String showDoctorScheduler(HttpSession session, Model model) {
+        if(session.getAttribute("patient-logged") == null)
+            return "index";
+
+        String patientEmail = (String)session.getAttribute("patient-logged");
+
+        List<Appointment> appointmentsByPatient = appointmentRepository.findAppointmentsByPatientOrderByStartDateTimeDesc(patientRepository.findByEmail(patientEmail));
+
+        System.out.println(appointmentsByPatient.get(0));
+        model.addAttribute("patientApointmens", appointmentsByPatient);
+
+        return "patient-scheduler";
     }
 }

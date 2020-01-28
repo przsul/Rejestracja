@@ -9,15 +9,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import pl.edu.utp.wtie.rejestracja.model.Doctor;
-import pl.edu.utp.wtie.rejestracja.model.Login;
-import pl.edu.utp.wtie.rejestracja.model.Patient;
+import org.springframework.web.servlet.ModelAndView;
+import pl.edu.utp.wtie.rejestracja.model.*;
+import pl.edu.utp.wtie.rejestracja.repository.AppointmentRepository;
 import pl.edu.utp.wtie.rejestracja.repository.DoctorRepository;
 import pl.edu.utp.wtie.rejestracja.repository.PatientRepository;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * LoginController
@@ -33,23 +38,51 @@ public class LoginController {
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+
     @GetMapping("/signin")
     public String showSignInForm(Login login) {
         return "sign-in";
     }
 
     @GetMapping("/panel")
-    public String showLoggedPanel(HttpSession session) {
-        if (session.getAttribute("doctor-logged") != null)
+    public String showLoggedPanel(HttpSession session, Model model) {
+        if (session.getAttribute("doctor-logged") != null){
             return "doctor-panel";
-        if (session.getAttribute("patient-logged") != null)
+        }
+
+        if (session.getAttribute("patient-logged") != null){
+            SearchDoctorModel searchDoctorModel = new SearchDoctorModel();
+            model.addAttribute("searchDoctor", searchDoctorModel);
             return "patient-panel";
+        }
+
+
 
         return "index";
     }
+    @PostMapping("/panel")
+    public ModelAndView searchDoctor(@Valid SearchDoctorModel searchDoctorModel, BindingResult result, ModelMap model, HttpSession session){
+        if (result.hasErrors()){
+            model.addAttribute("searchDoctor", searchDoctorModel);
+            return new ModelAndView("patient-panel", model);
+        }
+        Map<Doctor, List<Appointment>> doctorsWithVisitsMap = new HashMap<>();
+
+        List<Doctor> searchedDoctors = doctorRepository.findByFirstNameOrLastNameOrCity(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity());
+        searchedDoctors.forEach((element) -> {
+            doctorsWithVisitsMap.put(element, appointmentRepository.findAppointmentsByDoctorOrderByStartDateTimeDesc(element));
+        });
+        model.addAttribute("searchDoctor", searchDoctorModel);
+        model.addAttribute("doctorWithAppointments", doctorsWithVisitsMap);
+        return new ModelAndView("patient-panel", model);
+    }
+
+
 
     @GetMapping("/")
-    public String dontBack(HttpSession session) {
+    public String dontBack(HttpSession session, Model model) {
         if (session.getAttribute("doctor-logged") != null)
             return "doctor-panel";
         if (session.getAttribute("patient-logged") != null)
@@ -58,7 +91,7 @@ public class LoginController {
         return "index";
     }
 
-    @PostMapping("/panel")
+    @PostMapping("/signin")
     public String showPanel(@Valid Login login, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors())
             return "sign-in";
@@ -68,7 +101,7 @@ public class LoginController {
             if (d.getEmail().equals(login.getEmail()))
                 if (passwordEncoder.matches(login.getPassword(), d.getPassword())) {
                     request.getSession().setAttribute("doctor-logged", login.getEmail());
-                    return "doctor-panel";
+                    return "redirect:/panel";
                 }
 
         Iterable<Patient> patients = patientRepository.findAll();
@@ -76,7 +109,7 @@ public class LoginController {
             if (p.getEmail().equals(login.getEmail()))
                 if (passwordEncoder.matches(login.getPassword(), p.getPassword())) {
                     request.getSession().setAttribute("patient-logged", login.getEmail());
-                    return "patient-panel";
+                    return "redirect:/panel";
                 }
 
         result.rejectValue("email", "error.login", "An account does not exists for this email.");
