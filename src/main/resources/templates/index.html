@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>ZnajdzLekarza</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
 </head>
+
 <body>
-    <h3>System rejestracji dla przychodni lekarskiej</h3>
-    <a href="/signin">Zaloguj się</a>
-    <br>
+    <header class="v-header containerx">
+        <div class="fullscreen-video-wrap">
+            <video th:src="@{/video/doctors.mp4}" autoplay="true" loop="true"></video>
+        </div>
 
-    <a href="/patient/signup">Zarejestruj się jako pacjent</a>
-    <br>
+        <div class="header-overlay"></div>
 
-    <a href="/doctor/signup">Zarejestruj się jako lekarz</a>
+        <div class="header-content text-md-center">
+            <h1>ZnajdzLekarza</h1>
+            <br>
+            <p>Nie masz czasu? Znajdź lekarza nie wychodząc z domu! ZnajdzLekarza to największa baza ze specjalistami z
+                całego kraju. Dołącz już dziś!</p>
+            <a href="/patient/signup"><button type="button" class="btn btn-info btn-primary">Rejestruj się jako
+                    pacjent</button></a>
+            <a href="/signin"><button type="button" class="btn btn-info btn-primary">Logowanie</button></a>
+            <a href="/doctor/signup"><button type="button" class="btn btn-info btn-primary">Rejestruj się jako
+                    lekarz</button></a>
+        </div>
+    </header>
 </body>
+
 </html>
