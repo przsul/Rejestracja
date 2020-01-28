@@ -1,6 +1,7 @@
 package pl.edu.utp.wtie.rejestracja;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -33,8 +34,10 @@ public class DataLoader implements ApplicationRunner {
     
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     
-    Timestamp startDateTime = new Timestamp(1579949255613L);
-    Timestamp endDateTime = new Timestamp(1579949255613L);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+
+    String startDateTime = LocalDateTime.now().format(formatter);
+    String endDateTime = LocalDateTime.now().format(formatter);
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
