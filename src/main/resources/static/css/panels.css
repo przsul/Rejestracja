@@ -1,0 +1,14 @@
+/* Panels of doctor and patient */
+
+body, html {
+    height: 100%;
+    background-color: #dedede;
+}
+
+form {
+    background-color: white;
+}
+
+table, tr, td {
+    background-color: white;
+}

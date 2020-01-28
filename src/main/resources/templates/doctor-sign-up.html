@@ -3,72 +3,119 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Doctor Sign Up</title>
+    <title>ZnajdzLekarza - Rejestracja lekarza</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
 </head>
 
 <body>
-    <form action="#" th:action="@{/doctor/add}" th:object="${doctor}" method="post">
-        <label for="email">E-mail</label>
-        <br>
-        <input type="text" th:field="*{email}" id="email" placeholder="E-mail">
-        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-        <br>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="/panel">ZnajdzLekarza</a>
 
-        <label for="password">Password</label>
-        <br>
-        <input type="password" th:field="*{password}" id="password" placeholder="Password">
-        <br>
-
-        <label for="firstName">First Name</label>
-        <br>
-        <input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name">
-        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
-        <br>
-
-        <label for="lastName">Last Name</label>
-        <br>
-        <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
-        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-        <br>
-
-        <label for="pesel">PESEL</label>
-        <br>
-        <input type="text" th:field="*{pesel}" id="pesel" placeholder="Pesel">
-        <span th:if="${#fields.hasErrors('pesel')}" th:errors="*{pesel}"></span>
-        <br>
-
-        <label for="specialization">Specjalizacja</label>
-        <br>
-        <input type="text" th:field="*{specialization}" id="specialization" placeholder="specialization">
-        <span th:if="${#fields.hasErrors('specialization')}" th:errors="*{specialization}"></span>
-        <br>
-
-        <label for="city">Miejscowość</label>
-        <br>
-        <input type="text" th:field="*{city}" id="city" placeholder="city">
-        <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
-        <br>
-
-        <label for="currentHospital">Obecna placówka</label>
-        <br>
-        <input type="text" th:field="*{currentHospital}" id="currentHospital" placeholder="currentHospital">
-        <span th:if="${#fields.hasErrors('currentHospital')}" th:errors="*{currentHospital}"></span>
-        <br>
-
-        <label for="phone">Telefon</label>
-        <br>
-        <input type="text" th:field="*{phone}" id="phone" placeholder="currentHospital">
-        <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
-        <br>
-
-        <input type="submit" value="Sign Up">
-        <br>
-
-        <ul th:each="error: ${#fields.errors('password')}">
-            <li th:each="message : ${error.split(',')}">
-                <p th:text="${message}"></p>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/patient/signup">Rejestruj się jako pacjent</a>
             </li>
-        </ul> 
-    </form>
+            <li class="nav-item">
+                <a class="nav-link" href="/signin">Zaloguj się</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container h-100">
+        <div class="row h-100 justify-content-center align-items-center">
+            <div class="col-sm"></div>
+            <div class="col-sm-6 ">
+                <form action="#" th:action="@{/doctor/add}" th:object="${doctor}" method="post" class="rounded border border-info p-4 m-5">
+                    <h2 class="text-center">Zarejestruj się jako lekarz</h2>
+                    <div class="form-group">
+                        <label for="email">E-mail:</label>
+                        <input class="form-control" type="email" th:field="*{email}" id="email" placeholder="E-mail">
+                        <span th:if="${#fields.hasErrors('email')}" class="badge badge-danger" th:errors="*{email}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Hasło:</label>
+                        <input class="form-control" type="password" th:field="*{password}" id="password" placeholder="Wpisz hasło">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstName">Imię:</label>
+                        <input class="form-control" type="text" th:field="*{firstName}" id="firstName" placeholder="Wpisz imię">
+                        <span th:if="${#fields.hasErrors('firstName')}" class="badge badge-danger" th:errors="*{firstName}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Nazwisko:</label>
+                        <input class="form-control" type="text" th:field="*{lastName}" id="lastName" placeholder="Wpisz nazwisko">
+                        <span th:if="${#fields.hasErrors('lastName')}" class="badge badge-danger" th:errors="*{lastName}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pesel">PESEL:</label>
+                        <input class="form-control" type="text" th:field="*{pesel}" id="pesel" placeholder="Wpisz PESEL">
+                        <span th:if="${#fields.hasErrors('pesel')}" class="badge badge-danger" th:errors="*{pesel}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specialization">Specjalizacja:</label>
+                        <input class="form-control" type="text" th:field="*{specialization}" id="specialization" placeholder="Wpisz specjalizację">
+                        <span th:if="${#fields.hasErrors('specialization')}" class="badge badge-danger" th:errors="*{specialization}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">Miejscowość:</label>
+                        <input class="form-control" type="text" th:field="*{city}" id="city" placeholder="Wpisz miejscowość">
+                        <span th:if="${#fields.hasErrors('city')}" class="badge badge-danger" th:errors="*{city}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="currentHospital">Obecna placówka:</label>
+                        <input class="form-control" type="text" th:field="*{currentHospital}" id="currentHospital" placeholder="Wpisz placówkę">
+                        <span th:if="${#fields.hasErrors('currentHospital')}" class="badge badge-danger" th:errors="*{currentHospital}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Telefon:</label>
+                        <input class="form-control" type="text" th:field="*{phone}" id="phone" placeholder="Wpisz numer telefonu">
+                        <span th:if="${#fields.hasErrors('phone')}" class="badge badge-danger" th:errors="*{phone}"></span>
+                    </div>
+
+                    <ol th:each="error: ${#fields.errors('password')}">
+                        <li class="badge badge-danger" th:each="message : ${error.split(',')}" th:text="${message}"></li>
+                    </ol> 
+
+                    <div class="text-center">
+                        <button class="btn btn-info" type="submit">Zarejestruj się</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+    </div>
 </body>
 </html>
+
+<!-- <form action="#" th:action="@{/panel}" th:object="${login}" method="post" class="rounded border border-info p-4 m-5">
+    <h2 class="text-center">ZnajdzLekarza</h2>
+    <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input class="form-control" type="email" th:field="*{email}" id="email" placeholder="Wpisz e-mail">
+        <span th:if="${#fields.hasErrors('email')}" class="badge badge-danger" th:errors="*{email}"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Hasło:</label>
+        <input class="form-control" type="password" th:field="*{password}" id="password" placeholder="Wpisz hasło">
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-info" type="submit">Zaloguj się</button>
+    </div>
+
+    <ol th:each="error: ${#fields.errors('password')}">
+        <li class="badge badge-danger" th:each="message : ${error.split(',')}" th:text="${message}"></li>
+    </ol> 
+</form> -->

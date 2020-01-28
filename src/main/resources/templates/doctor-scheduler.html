@@ -2,31 +2,29 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Scheduler</title>
+    <title>Terminarz</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/panels.css}">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <!-- Brand -->
-        <a class="navbar-brand" href="/panel">Logo</a>
+        <a class="navbar-brand" href="/panel">ZnajdzLekarza</a>
 
-        <!-- Links -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/panel/scheduler">Scheduler</a>
+                <a class="nav-link" href="/panel/scheduler">Terminarz</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/panel/doctor-settings">Account Settings</a>
+                <a class="nav-link" href="/panel/doctor-settings">Ustawienia konta</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/signout">Logout</a>
+                <a class="nav-link" href="/signout">Wyloguj</a>
             </li>
         </ul>
     </nav>
@@ -34,19 +32,18 @@
     <div class="container">
         <div class="row mt-3">
             <div class="col">
-                <h3>Add appointment</h3>
-                <form action="#" th:action="@{/addAppointment}" th:object="${appointment}" method="post">
+                <form action="#" th:action="@{/addAppointment}" th:object="${appointment}" method="post" class="rounded border border-info p-4 m-5">
+                    <h3>Dodaj wizytę</h3>
                     <div class="form-group">
-                        <label for="sdt">Start date-time:</label>
+                        <label for="sdt">Od kiedy:</label>
                         <input type="datetime-local" th:field="*{startDateTime}" class="form-control"
                             id="start-date-time">
                     </div>
                     <div class="form-group">
-                        <label for="edt">End date-time:</label>
+                        <label for="edt">Do kiedy:</label>
                         <input type="datetime-local" th:field="*{endDateTime}" class="form-control" id="end-date-time">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <!-- <h4 id="dateRange" class="text-center"></h4> -->
+                    <button type="submit" class="btn btn-primary">Potwierdź</button>
                 </form>
             </div>
         </div>
