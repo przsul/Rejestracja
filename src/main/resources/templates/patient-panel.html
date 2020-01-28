@@ -48,9 +48,16 @@
         </form>
 
         <table th:if="${doctorWithAppointments}">
-            <tr th:each="element : ${doctorWithAppointments}">
-                <td th:text="${element.key}">keyvalue</td>
-            </tr>
+            <th:block th:each="element : ${doctorWithAppointments}">
+                <tr>
+                    <td th:text="${element.key.firstName + ' ' + element.key.lastName + ' spec.' + element.key.specialization + ' miejscowość: ' + element.key.city + ' szpital: ' + element.key.currentHospital}"></td>
+                </tr>
+                <tr th:each="appointment : ${element.value}">
+                    <td th:text="${appointment.startDateTime + ' - ' + appointment.endDateTime}"></td>
+                </tr>
+            </th:block>
+
+
         </table>
     </div>
 </body>

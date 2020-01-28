@@ -43,6 +43,9 @@ public class DataLoader implements ApplicationRunner {
 		doctor.setEmail("doctor@doctor.pl");
 		doctor.setFirstName("Jan");
 		doctor.setLastName("Kowal");
+		doctor.setCurrentHospital("Bydgoszcz szpital Wuhang");
+		doctor.setCity("Bydgoszcz");
+		doctor.setSpecialization("Ginekolog");
 		doctor.setPassword(passwordEncoder.encode("Jankowal123!@#"));
 		doctor.setPesel("97020406075");
 
