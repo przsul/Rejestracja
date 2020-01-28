@@ -1,7 +1,7 @@
 package pl.edu.utp.wtie.rejestracja.model;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,9 +22,9 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private Timestamp startDateTime;
+    private String startDateTime;
 
-    private Timestamp endDateTime;
+    private String endDateTime;
 
     private String dayOfTheWeek;
 
@@ -38,7 +38,14 @@ public class Appointment {
 
     public Appointment() {}
 
-    public Appointment(long id, Timestamp startDateTime, Timestamp endDateTime, Doctor doctor,
+    public void setDayOfTheWeek() {
+        String[] daysInWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime ldt = LocalDateTime.parse(startDateTime, formatter);
+        this.dayOfTheWeek = daysInWeek[ldt.getDayOfWeek().getValue()];
+    }
+
+    public Appointment(long id, String startDateTime, String endDateTime, Doctor doctor,
             Patient patient, boolean isBooked) {
         this.id = id;
         this.startDateTime = startDateTime;
@@ -46,12 +53,6 @@ public class Appointment {
         this.doctor = doctor;
         this.patient = patient;
         this.isBooked = isBooked;
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(startDateTime);
-
-        String[] daysInWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-        
-        this.dayOfTheWeek = daysInWeek[cal.get(Calendar.DAY_OF_WEEK)-1];
+        setDayOfTheWeek();
     }
 }
