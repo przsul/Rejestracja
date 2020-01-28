@@ -2,29 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Sign In</title>
+    <title>ZnajdzLekarza - Logowanie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 </head>
 <body>
-    <form action="#" th:action="@{/panel}" th:object="${login}" method="post">
-        <label for="email">E-mail</label>
-        <br>
-        <input type="text" th:field="*{email}" id="email" placeholder="E-mail">
-        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-        <br>
+    <div class="container h-100">
+        <div class="row h-100 justify-content-center align-items-center">
+            <div class="col-sm"></div>
+            <div class="col-sm-6 ">
+                <form action="#" th:action="@{/panel}" th:object="${login}" method="post" class="rounded border border-info p-4 m-5">
+                    <h2 class="text-center">ZnajdzLekarza</h2>
+                    <div class="form-group">
+                        <label for="email">E-mail:</label>
+                        <input class="form-control" type="email" th:field="*{email}" id="email" placeholder="Wpisz e-mail">
+                        <span th:if="${#fields.hasErrors('email')}" class="badge badge-danger" th:errors="*{email}"></span>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="password">Hasło:</label>
+                        <input class="form-control" type="password" th:field="*{password}" id="password" placeholder="Wpisz hasło">
+                    </div>
 
-        <label for="password">Password</label>
-        <br>
-        <input type="password" th:field="*{password}" id="password" placeholder="Password">
-        <br>
+                    <div class="text-center">
+                        <button class="btn btn-info" type="submit">Zaloguj się</button>
+                    </div>
 
-        <input type="submit" value="Sign In">
-        <br>
-        
-        <ul th:each="error: ${#fields.errors('password')}">
-            <li th:each="message : ${error.split(',')}">
-                <p th:text="${message}"></p>
-            </li>
-        </ul> 
-    </form>
+                    <ol th:each="error: ${#fields.errors('password')}">
+                        <li class="badge badge-danger" th:each="message : ${error.split(',')}" th:text="${message}"></li>
+                    </ol> 
+                </form>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+
+    </div>
+   
 </body>
 </html>
