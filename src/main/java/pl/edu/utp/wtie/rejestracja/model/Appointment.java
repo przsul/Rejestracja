@@ -47,7 +47,7 @@ public class Appointment {
     }
 
     public void setDayOfTheWeek() {
-        String[] daysInWeek = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+        String[] daysInWeek = { "Nie", "Pon", "Wt", "Śr", "Cz", "Pią", "Sob" };
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         Date date;
         Calendar cal = Calendar.getInstance();
@@ -58,7 +58,7 @@ public class Appointment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        this.dayOfTheWeek = daysInWeek[cal.get(Calendar.DAY_OF_WEEK)];
+        this.dayOfTheWeek = daysInWeek[cal.get(Calendar.DAY_OF_WEEK)-1];
     }
 
     public Appointment(long id, Date startDateTime, Date endDateTime, Doctor doctor,
