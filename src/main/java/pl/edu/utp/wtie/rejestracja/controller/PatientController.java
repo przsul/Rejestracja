@@ -1,5 +1,7 @@
 package pl.edu.utp.wtie.rejestracja.controller;
 
+import java.util.List;
+
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +29,6 @@ import pl.edu.utp.wtie.rejestracja.model.Patient;
 import pl.edu.utp.wtie.rejestracja.repository.AppointmentRepository;
 import pl.edu.utp.wtie.rejestracja.repository.DoctorRepository;
 import pl.edu.utp.wtie.rejestracja.repository.PatientRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * PatientController
