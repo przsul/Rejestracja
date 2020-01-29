@@ -29,11 +29,11 @@
         </ul>
     </nav>
 
-    <div class="container">
-        <div class="row mt-3">
+    <div class="container-fluid">
+        <div class="row mt-5">
             <div class="col"></div>
-            <div class="col-sm-5">
-                <form action="#" th:action="@{/addAppointment}" th:object="${appointment}" method="post" class="rounded border border-info p-4 m-5">
+            <div class="col-sm-4">
+                <form action="#" th:action="@{/addAppointment}" th:object="${appointment}" method="post" class="rounded border border-info p-4">
                     <h3>Dodaj wizytę</h3>
                     <div class="form-group">
                         <label for="start-date-time">Od kiedy:</label>
@@ -49,17 +49,14 @@
                     </div>
                 </form>
             </div>
-            <div class="col"></div>
-        </div>
-        <div class="row mt-3">
-            <div class="col" style="overflow-x: auto;width: 100px;">
-                <table class="table table-bordered">
-                    <tbody id="appointments">
-                        <tr th:each="appointment : ${doctorAppointments}">
-                            <td 
+            <div class="col">
+                <table class="table table-bordered table-sm">
+                    <tbody>
+                        <tr class="table-info" th:each="appointment : ${doctorAppointments}">
+                            <td class="align-middle"
                                 th:utext="${appointment.dayOfTheWeek + ', ' + #dates.format(appointment.startDateTime,'dd.MM.yyyy')}">
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 <button class="btn btn-primary"
                                         th:text="${#dates.format(appointment.startDateTime,'HH:mm') + ' - ' + #dates.format(appointment.endDateTime,'HH:mm')}">
                                 </button>
@@ -68,6 +65,7 @@
                     </tbody>
                 </table>
             </div>
+            <div class="col"></div>
         </div>
     </div>
 </body>
