@@ -53,11 +53,11 @@
                     <tbody id="appointments">
                         <tr th:each="appointment : ${doctorAppointments}">
                             <td 
-                                th:utext="${appointment.dayOfTheWeek + ', ' + appointment.startDateTime}">
+                                th:utext="${appointment.dayOfTheWeek + ', ' + #dates.format(appointment.startDateTime,'dd.MM.yyyy')}">
                             </td>
                             <td>
                                 <button class="btn btn-primary"
-                                        th:text="${appointment.startDateTime + ' - ' + appointment.startDateTime}">
+                                        th:text="${#dates.format(appointment.startDateTime,'HH:mm') + ' - ' + #dates.format(appointment.endDateTime,'HH:mm')}">
                                 </button>
                             </td>
                         </tr>

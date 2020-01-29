@@ -1,13 +1,18 @@
 package pl.edu.utp.wtie.rejestracja.model;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -22,30 +27,41 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String startDateTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private Date startDateTime;
 
-    private String endDateTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private Date endDateTime;
 
     private String dayOfTheWeek;
 
     private boolean isBooked;
-    
+
     @ManyToOne
     private Doctor doctor;
 
     @ManyToOne
     private Patient patient;
 
-    public Appointment() {}
-
-    public void setDayOfTheWeek() {
-        String[] daysInWeek = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        LocalDateTime ldt = LocalDateTime.parse(startDateTime, formatter);
-        this.dayOfTheWeek = daysInWeek[ldt.getDayOfWeek().getValue()];
+    public Appointment() {
     }
 
-    public Appointment(long id, String startDateTime, String endDateTime, Doctor doctor,
+    public void setDayOfTheWeek() {
+        String[] daysInWeek = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Date date;
+        Calendar cal = Calendar.getInstance();
+
+        try {
+            date = (Date) formatter.parse("2020-01-29T09:00");
+            cal.setTime(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.dayOfTheWeek = daysInWeek[cal.get(Calendar.DAY_OF_WEEK)];
+    }
+
+    public Appointment(long id, Date startDateTime, Date endDateTime, Doctor doctor,
             Patient patient, boolean isBooked) {
         this.id = id;
         this.startDateTime = startDateTime;

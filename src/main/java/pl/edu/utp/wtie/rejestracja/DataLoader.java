@@ -1,7 +1,9 @@
 package pl.edu.utp.wtie.rejestracja;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -25,19 +27,28 @@ public class DataLoader implements ApplicationRunner {
 
     @Autowired
     private DoctorRepository doctorRepository;
-    
+
     @Autowired
     private PatientRepository patientRepository;
 
     @Autowired
     private AppointmentRepository appointmentRepository;
-    
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
-    String startDateTime = LocalDateTime.now().format(formatter);
-    String endDateTime = LocalDateTime.now().format(formatter);
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+    Date startDateTime;
+    Date endDateTime;
+
+    public DataLoader() {
+        try {
+            startDateTime = (Date) formatter.parse("2020-01-29T09:00");
+            endDateTime = (Date) formatter.parse("2020-01-29T10:00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
