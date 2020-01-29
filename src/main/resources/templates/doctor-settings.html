@@ -30,22 +30,22 @@
 <div class="container">
     <form action="#" th:object="${doctor}" th:action= "@{/panel/doctor-settings}" method="post" class="rounded border border-info p-4 m-5">
         <div class="form-group">
-            <label for="specialization">Specialization</label>
-            <input type="text" th:field="*{specialization}" class="form-control" id="specialization" placeholder="" />
+            <label for="specialization">Specjalizacja:</label>
+            <input type="text" th:field="*{specialization}" class="form-control" id="specialization" placeholder="Wpisz specjalizację" />
         </div>
         <div class="form-group">
-            <label for="currentHospital">Current Hospital</label>
-            <input type="text" th:field="*{currentHospital}" class="form-control" id="currentHospital" placeholder="" />
+            <label for="currentHospital">Obecna placówka:</label>
+            <input type="text" th:field="*{currentHospital}" class="form-control" id="currentHospital" placeholder="Wpisz obecną placówkę" />
         </div>
         <div class="form-group">
-            <label for="city">City</label>
-            <input type="text" th:field="*{city}" class="form-control" id="city" placeholder="" />
+            <label for="city">Miasto:</label>
+            <input type="text" th:field="*{city}" class="form-control" id="city" placeholder="Wpisz miasto" />
         </div>
         <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="text" th:field="*{phone}" class="form-control" id="phone" placeholder="" />
+            <label for="phone">Telefon:</label>
+            <input type="text" th:field="*{phone}" class="form-control" id="phone" placeholder="Wpisz numer telefonu" />
         </div>
-        <button type="submit" value="Submit" class="btn btn-primary">Save</button>
+        <button type="submit" value="Submit" class="btn btn-primary">Zapisz</button>
 
         <ul th:each="error: ${#fields.errors('phone')}">
             <li th:each="message : ${error.split(',')}">

@@ -35,12 +35,12 @@
                 <form action="#" th:action="@{/addAppointment}" th:object="${appointment}" method="post" class="rounded border border-info p-4 m-5">
                     <h3>Dodaj wizytę</h3>
                     <div class="form-group">
-                        <label for="sdt">Od kiedy:</label>
+                        <label for="start-date-time">Od kiedy:</label>
                         <input type="datetime-local" th:field="*{startDateTime}" class="form-control"
                             id="start-date-time">
                     </div>
                     <div class="form-group">
-                        <label for="edt">Do kiedy:</label>
+                        <label for="end-date-time">Do kiedy:</label>
                         <input type="datetime-local" th:field="*{endDateTime}" class="form-control" id="end-date-time">
                     </div>
                     <button type="submit" class="btn btn-primary">Potwierdź</button>
@@ -53,11 +53,11 @@
                     <tbody id="appointments">
                         <tr th:each="appointment : ${doctorAppointments}">
                             <td 
-                                th:utext="${appointment.dayOfTheWeek + ', ' + #dates.format(appointment.startDateTime,'dd.MM.YY')}">
+                                th:utext="${appointment.dayOfTheWeek + ', ' + appointment.startDateTime}">
                             </td>
                             <td>
                                 <button class="btn btn-primary"
-                                        th:text="${#dates.format(appointment.startDateTime,'HH:mm') + ' - ' + #dates.format(appointment.startDateTime,'HH:mm')}">
+                                        th:text="${appointment.startDateTime + ' - ' + appointment.startDateTime}">
                                 </button>
                             </td>
                         </tr>
