@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -69,17 +71,11 @@ public class LoginController {
             model.addAttribute("searchDoctor", searchDoctorModel);
             return new ModelAndView("patient-panel", model);
         }
-        Map<Doctor, List<Appointment>> doctorsWithVisitsMap = new HashMap<>();
-
-//        List<Doctor> searchedDoctors = doctorRepository.findByFirstNameOrLastNameOrCity(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity());
-//        searchedDoctors.forEach((element) -> {
-//            doctorsWithVisitsMap.put(element, appointmentRepository.findAppointmentsByDoctorOrderByStartDateTimeDesc(element));
-//        });
-        List<Appointment> appointmentsWithDoctor = appointmentRepository.findByDoctorFirstNameOrDoctorLastNameOrDoctorCityOrDoctorSpecializationOrderByStartDateTimeDesc(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity(), "Ginekolog");
-
-        System.out.println(appointmentsWithDoctor);
+        Page<Appointment> appointmentsWithDoctor = appointmentRepository.findByDoctorFirstNameOrDoctorLastNameOrDoctorCityOrDoctorSpecializationOrderByStartDateTimeDesc(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity(), "Ginekolog", PageRequest.of(0, 1));
         model.addAttribute("searchDoctor", searchDoctorModel);
         model.addAttribute("AppointmentsWithDoctor", appointmentsWithDoctor);
+        model.addAttribute("currentPage", 0);
+        model.addAttribute("pageSize", 10);
         return new ModelAndView("patient-panel", model);
     }
 
