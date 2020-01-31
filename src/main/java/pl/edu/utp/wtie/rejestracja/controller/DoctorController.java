@@ -1,6 +1,5 @@
 package pl.edu.utp.wtie.rejestracja.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.Message;
@@ -63,13 +62,8 @@ public class DoctorController {
             return "index";
 
         String doctorEmail = (String)session.getAttribute("doctor-logged");
-        List<Appointment> doctorAppointments = new ArrayList<>();
-
-        Iterable<Appointment> appointments = appointmentRepository.findAll();
-
-        for(Appointment a : appointments)
-            if(doctorEmail.equals(a.getDoctor().getEmail()))
-                doctorAppointments.add(a);
+        Doctor doctor = doctorRepository.findByEmail(doctorEmail);
+        List<Appointment> doctorAppointments = appointmentRepository.findByDoctorOrderByStartDateTime(doctor);
         
         model.addAttribute("doctorAppointments", doctorAppointments);
 
@@ -81,13 +75,14 @@ public class DoctorController {
         if (result.hasErrors())
             return new ModelAndView("doctor-sign-up", model);
 
-        Iterable<Patient> patients = patientRepository.findAll();
-        for (Patient p : patients)
-            if (p.getEmail().equals(doctor.getEmail())) {
-                result.rejectValue("email", "error.doctor", "An account already exists for this email.");
-                return new ModelAndView("doctor-sign-up", model);
-            }
+        // Check if someone from patients is registered by this email
+        List<Patient> patients = patientRepository.findByEmailOrderById(doctor.getEmail());
+        if(patients.size() != 0) {
+            result.rejectValue("email", "error.doctor", "An account already exists for this email.");
+            return new ModelAndView("doctor-sign-up", model);
+        }
 
+        // Store password temporarily for sending in email
         String passwordTmp = doctor.getPassword();
 
         try {
@@ -98,6 +93,7 @@ public class DoctorController {
             return new ModelAndView("doctor-sign-up", model);
         }
 
+        // Sending email after successful registration
         MimeMessagePreparator preparator = mimeMessage -> {
             mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(doctor.getEmail()));
             mimeMessage.setFrom(new InternetAddress("zpo85876@gmail.com", "ZPO PROJECT"));
