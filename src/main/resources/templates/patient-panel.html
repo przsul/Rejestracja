@@ -30,7 +30,7 @@
 </nav>
 
 <div class="container">
-    <form action="#" th:object="${searchDoctor}" th:action="@{/panel}" method="post">
+    <form action="#" th:object="${searchDoctor}" th:action="@{/panel/0}" method="post">
         <div class="form-group">
             <label for="specialization">Imię doktora</label>
             <input type="text" th:field="*{doctorFirstName}" class="form-control" id="specialization" placeholder=""/>
@@ -47,8 +47,8 @@
 
     </form>
 </div>
-<div class="container">
-    <table th:if="${AppointmentsWithDoctor}" class="table">
+<div class="container" th:if="${AppointmentsWithDoctor}">
+    <table class="table">
         <thead>
         <tr>
             <th scope="col">Start wizyty</th>
@@ -74,6 +74,12 @@
         </tr>
         </tbody>
     </table>
+    <form th:if="${currentPage > 0}" action="#" th:object="${searchDoctor}" th:action="@{'/panel/' + ${currentPage - 1}}" method="post">
+        <button type="submit" value="Submit" class="btn btn-primary">Poprzednia</button>
+    </form>
+    <form th:if="${currentPage < (totalPages - 1)}" action="#" th:object="${searchDoctor}" th:action="@{'/panel/' + ${currentPage + 1}}" method="post">
+        <button type="submit" value="Submit" class="btn btn-primary">Następna</button>
+    </form>
 </div>
 </body>
 </html>
