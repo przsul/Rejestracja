@@ -4,6 +4,8 @@ import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -77,5 +79,7 @@ public class DataLoader implements ApplicationRunner {
 
         Appointment appointment2 = new Appointment(2L, startDateTime, endDateTime, doctor, patient, true);
         appointmentRepository.save(appointment2);
+        Appointment appointment3 = new Appointment(3L, startDateTime, endDateTime, doctor, null, true);
+        appointmentRepository.save(appointment3);
     }
 }

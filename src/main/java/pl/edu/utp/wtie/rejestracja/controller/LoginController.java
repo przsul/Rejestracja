@@ -1,5 +1,6 @@
 package pl.edu.utp.wtie.rejestracja.controller;
 
+import javax.print.Doc;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -70,12 +71,15 @@ public class LoginController {
         }
         Map<Doctor, List<Appointment>> doctorsWithVisitsMap = new HashMap<>();
 
-        List<Doctor> searchedDoctors = doctorRepository.findByFirstNameOrLastNameOrCity(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity());
-        searchedDoctors.forEach((element) -> {
-            doctorsWithVisitsMap.put(element, appointmentRepository.findAppointmentsByDoctorOrderByStartDateTimeDesc(element));
-        });
+//        List<Doctor> searchedDoctors = doctorRepository.findByFirstNameOrLastNameOrCity(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity());
+//        searchedDoctors.forEach((element) -> {
+//            doctorsWithVisitsMap.put(element, appointmentRepository.findAppointmentsByDoctorOrderByStartDateTimeDesc(element));
+//        });
+        List<Appointment> appointmentsWithDoctor = appointmentRepository.findByDoctorFirstNameOrDoctorLastNameOrDoctorCityOrDoctorSpecializationOrderByStartDateTimeDesc(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity(), "Ginekolog");
+
+        System.out.println(appointmentsWithDoctor);
         model.addAttribute("searchDoctor", searchDoctorModel);
-        model.addAttribute("doctorWithAppointments", doctorsWithVisitsMap);
+        model.addAttribute("AppointmentsWithDoctor", appointmentsWithDoctor);
         return new ModelAndView("patient-panel", model);
     }
 

@@ -9,6 +9,8 @@ import pl.edu.utp.wtie.rejestracja.model.Appointment;
 import pl.edu.utp.wtie.rejestracja.model.Doctor;
 import pl.edu.utp.wtie.rejestracja.model.Patient;
 
+import javax.print.Doc;
+
 /**
  * AppointmentRepository
  */
@@ -19,4 +21,6 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Long>
     List<Appointment> findAppointmentsByDoctorOrderByStartDateTimeDesc(Doctor doctor);
 
     List<Appointment> findByDoctorOrderByStartDateTime(Doctor doctor);
+
+    List<Appointment> findByDoctorFirstNameOrDoctorLastNameOrDoctorCityOrDoctorSpecializationOrderByStartDateTimeDesc(String firstName, String lastName, String city, String specialization);
 }

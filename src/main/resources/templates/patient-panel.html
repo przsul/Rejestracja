@@ -11,47 +11,69 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/panels.css}">
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <!-- Brand -->
-        <a class="navbar-brand" href="/panel">ZnajdzLekarza</a>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/panel">ZnajdzLekarza</a>
 
-        <!-- Links -->
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/panel/patient-scheduler">My appointments</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/panel/patient-settings">Ustawienia konta</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/signout">Wyloguj</a>
-            </li>
-        </ul>
-    </nav>
+    <!-- Links -->
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/panel/patient-scheduler">My appointments</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/panel/patient-settings">Ustawienia konta</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signout">Wyloguj</a>
+        </li>
+    </ul>
+</nav>
 
-    <div class="container">
-        <form action="#" th:object="${searchDoctor}" th:action= "@{/panel}" method="post">
-            <div class="form-group">
-                <label for="specialization">Imię doktora</label>
-                <input type="text" th:field="*{doctorFirstName}" class="form-control" id="specialization" placeholder="" />
-            </div>
-            <div class="form-group">
-                <label for="currentHospital">Nazwisko doktora</label>
-                <input type="text" th:field="*{doctorLastName}" class="form-control" id="currentHospital" placeholder="" />
-            </div>
-            <div class="form-group">
-                <label for="city">Miejscowość</label>
-                <input type="text" th:field="*{city}" class="form-control" id="city" placeholder="" />
-            </div>
-            <button type="submit" value="Submit" class="btn btn-primary">Wyszukaj</button>
+<div class="container">
+    <form action="#" th:object="${searchDoctor}" th:action="@{/panel}" method="post">
+        <div class="form-group">
+            <label for="specialization">Imię doktora</label>
+            <input type="text" th:field="*{doctorFirstName}" class="form-control" id="specialization" placeholder=""/>
+        </div>
+        <div class="form-group">
+            <label for="currentHospital">Nazwisko doktora</label>
+            <input type="text" th:field="*{doctorLastName}" class="form-control" id="currentHospital" placeholder=""/>
+        </div>
+        <div class="form-group">
+            <label for="city">Miejscowość</label>
+            <input type="text" th:field="*{city}" class="form-control" id="city" placeholder=""/>
+        </div>
+        <button type="submit" value="Submit" class="btn btn-primary">Wyszukaj</button>
 
-        </form>
-
-        <table th:if="${doctorWithAppointments}">
-            <tr th:each="element : ${doctorWithAppointments}">
-                <td th:text="${element.key}">keyvalue</td>
-            </tr>
-        </table>
-    </div>
+    </form>
+</div>
+<div class="container">
+    <table th:if="${AppointmentsWithDoctor}" class="table">
+        <thead>
+        <tr>
+            <th scope="col">Start wizyty</th>
+            <th scope="col">Koniec wizyty</th>
+            <th scope="col">Dzień tygodnia</th>
+            <th scope="col">Imię i nazwisko doktora</th>
+            <th scope="col">Specjalizacja</th>
+            <th scope="col">Miasto</th>
+            <th scope="col">Szpital</th>
+            <th scope="col">Zapisz</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appointment : ${AppointmentsWithDoctor}">
+            <td th:text="${appointment.startDateTime}"></td>
+            <td th:text="${appointment.endDateTime}"></td>
+            <td th:text="${appointment.dayOfTheWeek}"></td>
+            <td th:text="${appointment.doctor.firstName + ' ' + appointment.doctor.lastName}"></td>
+            <td th:text="${appointment.doctor.specialization}"></td>
+            <td th:text="${appointment.doctor.city}"></td>
+            <td th:text="${appointment.doctor.currentHospital}"></td>
+            <td ><a href="test"><button type="button" class="btn btn-primary" th:disabled="${appointment.patient != null}">Zapisz</button></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
