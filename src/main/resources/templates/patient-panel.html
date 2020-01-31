@@ -18,7 +18,7 @@
     <!-- Links -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href="/panel/patient-scheduler">My appointments</a>
+            <a class="nav-link" href="/panel/patient-scheduler">Moje wizyty</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/panel/patient-settings">Ustawienia konta</a>
@@ -32,15 +32,15 @@
 <div class="container">
     <form action="#" th:object="${searchDoctor}" th:action="@{/panel/0}" method="post">
         <div class="form-group">
-            <label for="specialization">Imię doktora</label>
+            <label for="specialization">Imię doktora:</label>
             <input type="text" th:field="*{doctorFirstName}" class="form-control" id="specialization" placeholder=""/>
         </div>
         <div class="form-group">
-            <label for="currentHospital">Nazwisko doktora</label>
+            <label for="currentHospital">Nazwisko doktora:</label>
             <input type="text" th:field="*{doctorLastName}" class="form-control" id="currentHospital" placeholder=""/>
         </div>
         <div class="form-group">
-            <label for="city">Miejscowość</label>
+            <label for="city">Miejscowość:</label>
             <input type="text" th:field="*{city}" class="form-control" id="city" placeholder=""/>
         </div>
         <button type="submit" value="Submit" class="btn btn-primary">Wyszukaj</button>

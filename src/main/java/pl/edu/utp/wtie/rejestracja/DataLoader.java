@@ -1,11 +1,9 @@
 package pl.edu.utp.wtie.rejestracja;
 
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
