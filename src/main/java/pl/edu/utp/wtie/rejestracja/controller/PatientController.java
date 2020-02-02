@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -107,5 +108,24 @@ public class PatientController {
         model.addAttribute("patientApointmens", appointmentsByPatient);
 
         return "patient-scheduler";
+    }
+    @GetMapping("/confirmappointment/{id}")
+    public String confirmAppointment(HttpSession session, Model model, @PathVariable int id) {
+        Appointment appointment = appointmentRepository.getOne((long) id);
+        if(session.getAttribute("patient-logged") == null || appointment.getPatient() != null)
+            return "index";
+        model.addAttribute("appointmentID", appointment.getId());
+        return "confirm-appointment";
+    }
+    @PostMapping("/confirmappointment/{id}")
+    public ModelAndView confirmAppointmentPost(BindingResult result, ModelMap model, HttpSession session, @PathVariable int id){
+        if (result.hasErrors()){
+            return new ModelAndView("patient-panel", model);
+        }
+        Appointment appointment = appointmentRepository.getOne((long) id);
+        Patient patient = patientRepository.findByEmail(session.getAttribute("patient-logged").toString());
+        appointment.setPatient(patient);
+        appointmentRepository.save(appointment);
+        return new ModelAndView("patient-panel", model);
     }
 }

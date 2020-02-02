@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class SearchDoctorModel {
+
     private String doctorFirstName;
 
     private String doctorLastName;

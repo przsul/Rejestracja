@@ -87,12 +87,18 @@
             </tbody>
         </table>
 
-        <form class="mr-2" th:if="${currentPage < (totalPages - 1)}" action="#" th:object="${searchDoctor}"
-            th:action="@{'/panel/' + ${currentPage + 1}}" method="post">
+        <form class="mr-2" th:if="${currentPage < (totalPages - 1)}" action="#" th:object="${searchDoctor}" th:action="@{'/panel/' + ${currentPage + 1}}" method="post">
+            <input type="text" th:field="*{doctorFirstName}" hidden/>
+            <input type="text" th:field="*{doctorLastName}" hidden/>
+            <input type="text" th:field="*{city}" hidden/>
+            <input type="text" th:field="*{specialization}" hidden/>
             <button type="submit" value="Submit" class="float-left btn btn-primary">Następna</button>
         </form>
-        <form th:if="${currentPage > 0}" action="#" th:object="${searchDoctor}"
-            th:action="@{'/panel/' + ${currentPage - 1}}" method="post">
+        <form th:if="${currentPage > 0}" action="#" th:object="${searchDoctor}" th:action="@{'/panel/' + ${currentPage - 1}}" method="post">
+            <input type="text" th:field="*{doctorFirstName}" hidden/>
+            <input type="text" th:field="*{doctorLastName}" hidden/>
+            <input type="text" th:field="*{city}" hidden/>
+            <input type="text" th:field="*{specialization}" hidden/>
             <button type="submit" value="Submit" class="float-right btn btn-primary">Poprzednia</button>
         </form>
 
