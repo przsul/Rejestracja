@@ -18,9 +18,8 @@ import pl.edu.utp.wtie.rejestracja.model.Patient;
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     List<Appointment> findAppointmentsByPatientOrderByStartDateTimeDesc(Patient patient);
 
-    List<Appointment> findAppointmentsByDoctorOrderByStartDateTimeDesc(Doctor doctor);
-
     List<Appointment> findByDoctorOrderByStartDateTime(Doctor doctor);
 
-    Page<Appointment> findByDoctorFirstNameOrDoctorLastNameOrDoctorCityOrDoctorSpecializationOrderByStartDateTimeDesc(String firstName, String lastName, String city, String specialization, Pageable pageable);
+    Page<Appointment> findByDoctorFirstNameContainsOrDoctorLastNameContainsOrDoctorCityContainsOrDoctorSpecializationContainsOrderByStartDateTimeDesc(String firstName, String lastName, String city, String specialization, Pageable pageable);
+
 }

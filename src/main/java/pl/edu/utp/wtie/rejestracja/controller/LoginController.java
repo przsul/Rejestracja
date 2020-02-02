@@ -75,7 +75,7 @@ public class LoginController {
             return new ModelAndView("patient-panel", model);
         }
         System.out.println(page);
-        Page<Appointment> appointmentsWithDoctor = appointmentRepository.findByDoctorFirstNameOrDoctorLastNameOrDoctorCityOrDoctorSpecializationOrderByStartDateTimeDesc(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity(), "Ginekolog", PageRequest.of(page, 1));
+        Page<Appointment> appointmentsWithDoctor = appointmentRepository.findByDoctorFirstNameContainsOrDoctorLastNameContainsOrDoctorCityContainsOrDoctorSpecializationContainsOrderByStartDateTimeDesc(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity(), searchDoctorModel.getSpecialization(), PageRequest.of(page, 1));
         model.addAttribute("searchDoctor", searchDoctorModel);
         model.addAttribute("AppointmentsWithDoctor", appointmentsWithDoctor);
         model.addAttribute("currentPage", page);
