@@ -38,14 +38,11 @@
                     <th>Imię i nazwisko doktora</th>
                     <th>Data rozpoczęcia wizyty</th>
                     <th>Data zakończenia wizyty</th>
-                    <th>Stan wizyty</th>
                 </tr>
                 <tr th:each="patientApointment : ${patientApointmens}">
                     <td th:text="${patientApointment.doctor.firstName + ' ' + patientApointment.doctor.lastName}"></td>
                     <td th:text="${patientApointment.startDateTime}"></td>
                     <td th:text="${patientApointment.endDateTime}"></td>
-                    <td th:if="${patientApointment.booked} == true" th:text="Potwierdzona"></td>
-                    <td th:if="${patientApointment.booked} == false" th:text="Niepotwierdzona"></td>
                 </tr>
             </table>
         </div>

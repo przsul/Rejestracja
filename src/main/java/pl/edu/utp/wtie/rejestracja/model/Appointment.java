@@ -35,7 +35,6 @@ public class Appointment {
 
     private String dayOfTheWeek;
 
-    private boolean isBooked;
 
     @ManyToOne
     private Doctor doctor;
@@ -62,13 +61,12 @@ public class Appointment {
     }
 
     public Appointment(long id, Date startDateTime, Date endDateTime, Doctor doctor,
-            Patient patient, boolean isBooked) {
+            Patient patient) {
         this.id = id;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.doctor = doctor;
         this.patient = patient;
-        this.isBooked = isBooked;
         setDayOfTheWeek();
     }
 }
