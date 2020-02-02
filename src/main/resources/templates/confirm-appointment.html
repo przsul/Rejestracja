@@ -34,6 +34,7 @@
     <div class="container">
         <form action="#" th:action="@{'/confirmappointment/' + ${appointmentID}}" method="post">
             <button type="submit" value="Submit" class="btn btn-primary">Potwierdz</button>
+            <a th:href="@{'/panel/'}"><button type="button" class="btn btn-primary">Anuluj</button></a>
         </form>
     </div>
 </body>

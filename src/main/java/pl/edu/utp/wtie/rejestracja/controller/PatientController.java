@@ -22,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.edu.utp.wtie.rejestracja.model.Appointment;
@@ -112,20 +113,19 @@ public class PatientController {
     @GetMapping("/confirmappointment/{id}")
     public String confirmAppointment(HttpSession session, Model model, @PathVariable int id) {
         Appointment appointment = appointmentRepository.getOne((long) id);
-        if(session.getAttribute("patient-logged") == null || appointment.getPatient() != null)
+        if(session.getAttribute("patient-logged") == null)
             return "index";
+        if(appointment.getPatient() != null)
+            return "redirect:/panel/";
         model.addAttribute("appointmentID", appointment.getId());
         return "confirm-appointment";
     }
     @PostMapping("/confirmappointment/{id}")
-    public ModelAndView confirmAppointmentPost(BindingResult result, ModelMap model, HttpSession session, @PathVariable int id){
-        if (result.hasErrors()){
-            return new ModelAndView("patient-panel", model);
-        }
+    public ModelAndView confirmAppointmentPost(ModelMap model, HttpSession session, @PathVariable int id){
         Appointment appointment = appointmentRepository.getOne((long) id);
         Patient patient = patientRepository.findByEmail(session.getAttribute("patient-logged").toString());
         appointment.setPatient(patient);
         appointmentRepository.save(appointment);
-        return new ModelAndView("patient-panel", model);
+        return new ModelAndView("redirect:/panel/patient-scheduler", model);
     }
 }
