@@ -1,7 +1,9 @@
 package pl.edu.utp.wtie.rejestracja;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -25,19 +27,37 @@ public class DataLoader implements ApplicationRunner {
 
     @Autowired
     private DoctorRepository doctorRepository;
-    
+
     @Autowired
     private PatientRepository patientRepository;
 
     @Autowired
     private AppointmentRepository appointmentRepository;
-    
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
-    String startDateTime = LocalDateTime.now().format(formatter);
-    String endDateTime = LocalDateTime.now().format(formatter);
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+    Date startDateTime;
+    Date endDateTime;
+    Date startDateTime1;
+    Date endDateTime1;
+    Date startDateTime2;
+    Date endDateTime2;
+
+
+    public DataLoader() {
+        try {
+            startDateTime = (Date) formatter.parse("2020-01-29T09:00");
+            endDateTime = (Date) formatter.parse("2020-01-29T10:00");
+            startDateTime1 = (Date) formatter.parse("2020-01-29T11:00");
+            endDateTime1 = (Date) formatter.parse("2020-01-29T12:00");
+            startDateTime2 = (Date) formatter.parse("2020-01-29T13:00");
+            endDateTime2 = (Date) formatter.parse("2020-01-29T14:00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -67,7 +87,9 @@ public class DataLoader implements ApplicationRunner {
         Appointment appointment = new Appointment(1L, startDateTime, endDateTime, doctor, patient, false);
         appointmentRepository.save(appointment);
 
-        Appointment appointment2 = new Appointment(2L, startDateTime, endDateTime, doctor, patient, true);
+        Appointment appointment2 = new Appointment(2L, startDateTime1, endDateTime1, doctor, patient, true);
         appointmentRepository.save(appointment2);
+        Appointment appointment3 = new Appointment(3L, startDateTime2, endDateTime2, doctor, null, true);
+        appointmentRepository.save(appointment3);
     }
 }

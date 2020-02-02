@@ -6,9 +6,10 @@ body, html {
 }
 
 form {
-    background-color: #dedede;
+    background-color: white;
 }
 
-table, tr, td {
-    background-color: #dedede;
+div table {
+    background-color: white;
 }
+

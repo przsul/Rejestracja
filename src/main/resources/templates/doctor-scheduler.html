@@ -29,44 +29,45 @@
         </ul>
     </nav>
 
-    <div class="container">
-        <div class="row mt-3">
-            <div class="col">
-                <form action="#" th:action="@{/addAppointment}" th:object="${appointment}" method="post" class="rounded border border-info p-4 m-5">
+    <div class="container-fluid">
+        <div class="row mt-5">
+            <div class="col"></div>
+            <div class="col-sm-4">
+                <form action="#" th:action="@{/addAppointment}" th:object="${appointment}" method="post"
+                    class="rounded border border-info p-4">
                     <h3>Dodaj wizytę</h3>
                     <div class="form-group">
                         <label for="start-date-time">Od kiedy:</label>
                         <input type="datetime-local" th:field="*{startDateTime}" class="form-control"
-                            id="start-date-time">
+                            id="start-date-time" required>
                     </div>
                     <div class="form-group">
                         <label for="end-date-time">Do kiedy:</label>
-                        <input type="datetime-local" th:field="*{endDateTime}" class="form-control" id="end-date-time">
+                        <input type="datetime-local" th:field="*{endDateTime}" class="form-control" id="end-date-time" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Potwierdź</button>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Potwierdź</button>
+                    </div>
                 </form>
             </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col" style="overflow-x: auto;width: 100px;">
-                <table class="table table-bordered">
-                    <tbody id="appointments">
-                        <tr th:each="appointment : ${doctorAppointments}">
-                            <td 
-                                th:utext="${appointment.dayOfTheWeek + ', ' + appointment.startDateTime}">
+            <div class="col">
+                <table class="table table-bordered table-sm">
+                    <tbody>
+                        <tr class="table-info" th:each="appointment : ${doctorAppointments}">
+                            <td class="align-middle"
+                                th:utext="${appointment.dayOfTheWeek + ', ' + #dates.format(appointment.startDateTime,'dd.MM.yyyy')}">
                             </td>
-                            <td>
-                                <button class="btn btn-primary"
-                                        th:text="${appointment.startDateTime + ' - ' + appointment.startDateTime}">
+                            <td class="align-middle">
+                                <button class="btn btn-primary" th:text="${#dates.format(appointment.startDateTime,'HH:mm') + ' - ' + #dates.format(appointment.endDateTime,'HH:mm')}">
                                 </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            <div class="col"></div>
         </div>
     </div>
 </body>
 <script th:src="@{/js/script.js}"></script>
-
 </html>

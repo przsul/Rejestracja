@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import pl.edu.utp.wtie.rejestracja.model.Appointment;
@@ -26,6 +27,11 @@ public class AppointmentController {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @GetMapping("/addAppointment") 
+    public String getBackFromAddAppointment() {
+        return "doctor-panel";
+    }
 
     @PostMapping("/addAppointment")
     public String addAppointment(Appointment appointment, HttpSession session, Model model) {
