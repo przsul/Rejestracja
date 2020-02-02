@@ -10,4 +10,6 @@ public class SearchDoctorModel {
 
     private String city;
 
+    private String specialization;
+
 }

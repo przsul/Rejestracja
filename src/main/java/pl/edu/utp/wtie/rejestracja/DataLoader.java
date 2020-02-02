@@ -1,11 +1,9 @@
 package pl.edu.utp.wtie.rejestracja;
 
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -64,14 +62,30 @@ public class DataLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         Doctor doctor = new Doctor();
-		doctor.setId(1L);
-		doctor.setEmail("doctor@doctor.pl");
-		doctor.setFirstName("Jan");
-		doctor.setLastName("Kowal");
-		doctor.setPassword(passwordEncoder.encode("Jankowal123!@#"));
-		doctor.setPesel("97020406075");
+        doctor.setId(1L);
+        doctor.setEmail("doctor@doctor.pl");
+        doctor.setFirstName("Jan");
+        doctor.setLastName("Kowal");
+        doctor.setCurrentHospital("Bydgoszcz szpital Wuhang");
+        doctor.setCity("Bydgoszcz");
+        doctor.setSpecialization("Ginekolog");
+        doctor.setPassword(passwordEncoder.encode("Jankowal123!@#"));
+        doctor.setPesel("97020406075");
 
         doctorRepository.save(doctor);
+
+        Doctor doctor2 = new Doctor();
+        doctor2.setId(2L);
+        doctor2.setEmail("doctor2@doctor.pl");
+        doctor2.setFirstName("Tomek");
+        doctor2.setLastName("Las");
+        doctor2.setCurrentHospital("Toruń Jurasza");
+        doctor2.setCity("Toruń");
+        doctor2.setSpecialization("Chirrug");
+        doctor2.setPassword(passwordEncoder.encode("Jankowal123!@#"));
+        doctor2.setPesel("97050907531");
+
+        doctorRepository.save(doctor2);
         
         Patient patient = new Patient();
         patient.setId(1L);

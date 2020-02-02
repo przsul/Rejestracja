@@ -1,6 +1,5 @@
 package pl.edu.utp.wtie.rejestracja.controller;
 
-import javax.print.Doc;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -8,7 +7,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,17 +16,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.edu.utp.wtie.rejestracja.model.*;
+
+import pl.edu.utp.wtie.rejestracja.model.Appointment;
+import pl.edu.utp.wtie.rejestracja.model.Doctor;
+import pl.edu.utp.wtie.rejestracja.model.Login;
+import pl.edu.utp.wtie.rejestracja.model.Patient;
+import pl.edu.utp.wtie.rejestracja.model.SearchDoctorModel;
 import pl.edu.utp.wtie.rejestracja.repository.AppointmentRepository;
 import pl.edu.utp.wtie.rejestracja.repository.DoctorRepository;
 import pl.edu.utp.wtie.rejestracja.repository.PatientRepository;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * LoginController
@@ -59,10 +56,7 @@ public class LoginController {
         }
 
         if (session.getAttribute("patient-logged") != null){
-            System.out.println(searchDoctorModel);
             model.addAttribute("searchDoctor", searchDoctorModel);
-            System.out.println(model);
-            System.out.println(model.getAttribute("AppointmentsWithDoctor"));
             return "patient-panel";
         }
 
@@ -77,8 +71,8 @@ public class LoginController {
             model.addAttribute("searchDoctor", searchDoctorModel);
             return new ModelAndView("patient-panel", model);
         }
-        System.out.println(page);
-        Page<Appointment> appointmentsWithDoctor = appointmentRepository.findByDoctorFirstNameOrDoctorLastNameOrDoctorCityOrDoctorSpecializationOrderByStartDateTimeDesc(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity(), "Ginekolog", PageRequest.of(page, 1));
+        System.out.println(searchDoctorModel);
+        Page<Appointment> appointmentsWithDoctor = appointmentRepository.findByDoctorFirstNameOrDoctorLastNameOrDoctorCityOrDoctorSpecializationOrderByStartDateTimeDesc(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity(), searchDoctorModel.getSpecialization(), PageRequest.of(page, 1));
         model.addAttribute("searchDoctor", searchDoctorModel);
         model.addAttribute("AppointmentsWithDoctor", appointmentsWithDoctor);
         model.addAttribute("currentPage", page);
