@@ -86,8 +86,6 @@ public class LoginController {
         return new ModelAndView("patient-panel", model);
     }
 
-
-
     @GetMapping("/")
     public String dontBack(HttpSession session, Model model) {
         if (session.getAttribute("doctor-logged") != null)

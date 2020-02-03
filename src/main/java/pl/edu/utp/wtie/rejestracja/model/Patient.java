@@ -28,9 +28,9 @@ public class Patient {
     @ValidPassword
     private String password;
 
-    @NotBlank(message = "E-mail is mandatory")
+    @NotBlank(message = "E-mail jest wymagany")
     @Column(unique = true)
-    @Email(message = "Wrong e-mail address")
+    @Email(message = "Adres e-mail jest niepoprawny")
     private String email;
 
     @Size(min = 1, max = 25)
@@ -39,6 +39,6 @@ public class Patient {
     @Size(min = 1, max = 25)
     private String lastName;
 
-    @PESEL(message = "Wrong PESEL")
+    @PESEL(message = "Numer PESEL jest niepoprawny")
     private String pesel;
 }

@@ -78,7 +78,7 @@ public class DoctorController {
         // Check if someone from patients is registered by this email
         List<Patient> patients = patientRepository.findByEmailOrderById(doctor.getEmail());
         if(patients.size() != 0) {
-            result.rejectValue("email", "error.doctor", "An account already exists for this email.");
+            result.rejectValue("email", "error.doctor", "Konto już istnieje dla tego adresu e-mail");
             return new ModelAndView("doctor-sign-up", model);
         }
 
@@ -89,7 +89,7 @@ public class DoctorController {
             doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
             doctorRepository.save(doctor);
         } catch (DataIntegrityViolationException e) {
-            result.rejectValue("email", "error.doctor", "An account already exists for this email.");
+            result.rejectValue("email", "error.doctor", "Konto już istnieje dla tego adresu e-mail");
             return new ModelAndView("doctor-sign-up", model);
         }
 

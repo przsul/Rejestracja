@@ -32,7 +32,7 @@
                     <h2 class="text-center">Zarejestruj się jako lekarz</h2>
                     <div class="form-group">
                         <label for="email">E-mail:</label>
-                        <input class="form-control" type="email" th:field="*{email}" id="email" placeholder="E-mail">
+                        <input class="form-control" type="text" th:field="*{email}" id="email" placeholder="E-mail">
                         <span th:if="${#fields.hasErrors('email')}" class="badge badge-danger" th:errors="*{email}"></span>
                     </div>
 

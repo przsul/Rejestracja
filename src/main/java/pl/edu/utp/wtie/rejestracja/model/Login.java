@@ -13,9 +13,9 @@ import pl.edu.utp.wtie.rejestracja.constraints.ValidPassword;
 @Data
 public class Login {
 
-    @NotBlank(message = "E-mail is mandatory")
+    @NotBlank(message = "E-mail jest wymagany")
     @Column(unique = true)
-    @Email(message = "Wrong e-mail address")
+    @Email(message = "Adres e-mail jest niepoprawny")
     private String email;
 
     @ValidPassword
