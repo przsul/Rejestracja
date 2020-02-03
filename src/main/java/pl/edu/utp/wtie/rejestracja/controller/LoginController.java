@@ -125,34 +125,7 @@ public class LoginController {
             }
         } else {
             result.rejectValue("email", "error.login", "Nie znaleziono takiego maila w bazie danych");
-
         }
-
-
-//        Doctor doctorByEmailAndPassword = doctorRepository.findByEmailAndPassword(login.getEmail(), passwordEncoder.encode(login.getPassword()));
-//        if(doctorByEmailAndPassword != null){
-//            request.getSession().setAttribute("doctor-logged", doctorByEmailAndPassword.getEmail());
-//            return "redirect:/panel";
-//        } else {
-//            if(doctorByEmail != null){
-//                result.rejectValue("password", "error.login", "Podano złe hasło");
-//            } else {
-//                result.rejectValue("email", "error.login", "Nie znaleziono takiego maila w bazie danych");
-//            }
-//        }
-//        Patient patientByEmail = patientRepository.findByEmail(login.getEmail());
-//        Patient patientByEmailAndPassword = patientRepository.findByEmailAndPassword(login.getEmail(), passwordEncoder.encode(login.getPassword()));
-//
-//        if(patientByEmailAndPassword != null){
-//            request.getSession().setAttribute("patient-logged", patientByEmailAndPassword.getEmail());
-//            return "redirect:/panel";
-//        } else {
-//            if(patientByEmail != null){
-//                result.rejectValue("password", "error.login", "Podano złe hasło");
-//            } else {
-//                result.rejectValue("email", "error.login", "Nie znaleziono takiego maila w bazie danych");
-//            }
-//        }
         return "sign-in";
     }
 
