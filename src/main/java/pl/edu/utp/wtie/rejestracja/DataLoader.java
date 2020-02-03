@@ -40,11 +40,12 @@ public class DataLoader implements ApplicationRunner {
 
     Date startDateTime;
     Date endDateTime;
+
     Date startDateTime1;
     Date endDateTime1;
+
     Date startDateTime2;
     Date endDateTime2;
-
 
     public DataLoader() {
         try {
@@ -71,6 +72,7 @@ public class DataLoader implements ApplicationRunner {
         doctor.setSpecialization("Ginekolog");
         doctor.setPassword(passwordEncoder.encode("Jankowal123!@#"));
         doctor.setPesel("97020406075");
+        doctor.setPhone("697034032");
 
         doctorRepository.save(doctor);
 
@@ -81,9 +83,10 @@ public class DataLoader implements ApplicationRunner {
         doctor2.setLastName("Las");
         doctor2.setCurrentHospital("Toruń Jurasza");
         doctor2.setCity("Toruń");
-        doctor2.setSpecialization("Chirrug");
+        doctor2.setSpecialization("Chirurg");
         doctor2.setPassword(passwordEncoder.encode("Jankowal123!@#"));
         doctor2.setPesel("97050907531");
+        doctor2.setPhone("697833123");
 
         doctorRepository.save(doctor2);
         
@@ -97,12 +100,19 @@ public class DataLoader implements ApplicationRunner {
 
         patientRepository.save(patient);
 
-        Appointment appointment = new Appointment(1L, new Date(), new Date(), doctor, patient);
+        Appointment appointment = new Appointment(1L, startDateTime, endDateTime, doctor, patient);
         appointmentRepository.save(appointment);
 
-        Appointment appointment2 = new Appointment(2L, new Date(), new Date(), doctor, patient);
+        Appointment appointment2 = new Appointment(2L, new Date(), new Date(), doctor, null);
         appointmentRepository.save(appointment2);
+
         Appointment appointment3 = new Appointment(3L, new Date(), new Date(), doctor, null);
         appointmentRepository.save(appointment3);
+
+        Appointment appointment4 = new Appointment(4L, startDateTime1, endDateTime1, doctor, patient);
+        appointmentRepository.save(appointment4);
+
+        Appointment appointment5 = new Appointment(5L, startDateTime2, endDateTime2, doctor2, null);
+        appointmentRepository.save(appointment5);
     }
 }

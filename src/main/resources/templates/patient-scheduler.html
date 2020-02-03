@@ -38,8 +38,8 @@
                 </tr>
                 <tr th:each="patientApointment : ${patientApointmens}">
                     <td th:utext="${patientApointment.doctor.firstName + ' ' + patientApointment.doctor.lastName}"></td>
-                    <td th:utext="${patientApointment.startDateTime}"></td>
-                    <td th:text="${patientApointment.endDateTime}"></td>
+                    <td th:utext="${#dates.format(patientApointment.startDateTime,'dd.MM.yyyy, HH:mm')}"></td>
+                    <td th:text="${#dates.format(patientApointment.endDateTime,'dd.MM.yyyy, HH:mm')}"></td>
                 </tr>
             </table>
         </div>
