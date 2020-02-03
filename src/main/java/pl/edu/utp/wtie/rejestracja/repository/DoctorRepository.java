@@ -13,5 +13,6 @@ import pl.edu.utp.wtie.rejestracja.model.Doctor;
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     Doctor findByEmail(String email);
+    Doctor findByEmailAndPassword(String email, String password);
     List<Doctor> findByFirstNameOrLastNameOrCity(String firstName, String lastName, String city);
 }

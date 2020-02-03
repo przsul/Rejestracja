@@ -106,23 +106,26 @@ public class LoginController {
         if (result.hasErrors())
             return "sign-in";
 
-        Iterable<Doctor> doctors = doctorRepository.findAll();
-        for (Doctor d : doctors)
-            if (d.getEmail().equals(login.getEmail()))
-                if (passwordEncoder.matches(login.getPassword(), d.getPassword())) {
-                    request.getSession().setAttribute("doctor-logged", login.getEmail());
-                    return "redirect:/panel";
-                }
+        Doctor doctorByEmail = doctorRepository.findByEmail(login.getEmail());
+        Patient patientByEmail = patientRepository.findByEmail(login.getEmail());
 
-        Iterable<Patient> patients = patientRepository.findAll();
-        for (Patient p : patients)
-            if (p.getEmail().equals(login.getEmail()))
-                if (passwordEncoder.matches(login.getPassword(), p.getPassword())) {
-                    request.getSession().setAttribute("patient-logged", login.getEmail());
-                    return "redirect:/panel";
-                }
-
-        result.rejectValue("email", "error.login", "An account does not exists for this email.");
+        if (doctorByEmail != null) {
+            if (passwordEncoder.matches(login.getPassword(), doctorByEmail.getPassword())) {
+                request.getSession().setAttribute("doctor-logged", doctorByEmail.getEmail());
+                return "redirect:/panel";
+            } else {
+                result.rejectValue("password", "error.login", "Podano złe hasło");
+            }
+        } else if (patientByEmail != null) {
+            if (passwordEncoder.matches(login.getPassword(), patientByEmail.getPassword())) {
+                request.getSession().setAttribute("patient-logged", patientByEmail.getEmail());
+                return "redirect:/panel";
+            } else {
+                result.rejectValue("password", "error.login", "Podano złe hasło");
+            }
+        } else {
+            result.rejectValue("email", "error.login", "Nie znaleziono takiego maila w bazie danych");
+        }
         return "sign-in";
     }
 
