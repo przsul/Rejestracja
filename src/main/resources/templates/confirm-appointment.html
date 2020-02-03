@@ -23,19 +23,28 @@
                 <a class="nav-link" href="/panel/patient-scheduler">Moje wizyty</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/panel/patient-settings">Ustawienia konta</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="/signout">Wyloguj</a>
             </li>
         </ul>
     </nav>
 
     <div class="container">
-        <form action="#" th:action="@{'/confirmappointment/' + ${appointmentID}}" method="post">
-            <button type="submit" value="Submit" class="btn btn-primary">Potwierdz</button>
-            <a th:href="@{'/panel/'}"><button type="button" class="btn btn-primary">Anuluj</button></a>
-        </form>
+        <div class="row">
+            <div class="col"></div>
+            <div id="elo" class="col-sm-6 rounded border border-info p-3 mt-5">
+                <h1 class="text-center pb-2">
+                    Czy potwierdzić wizytę?
+                </h1>
+                <form action="#" th:action="@{'/confirmappointment/' + ${appointmentID}}" method="post">
+                    <div class="text-center">
+                        <button type="submit" value="Submit" class="btn btn-primary">Potwierdź</button>
+                        <a th:href="@{'/panel/'}"><button type="button" class="btn btn-primary">Anuluj</button></a>
+                    </div>
+                </form>
+            </div>
+            <div class="col"></div>
+        </div>
+
     </div>
 </body>
 

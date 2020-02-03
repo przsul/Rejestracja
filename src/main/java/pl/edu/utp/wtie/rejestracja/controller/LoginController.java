@@ -69,9 +69,6 @@ public class LoginController {
             model.addAttribute("searchDoctor", searchDoctorModel);
             return "patient-panel";
         }
-
-
-
         return "index";
     }
 
@@ -81,7 +78,7 @@ public class LoginController {
             model.addAttribute("searchDoctor", searchDoctorModel);
             return new ModelAndView("patient-panel", model);
         }
-        Page<Appointment> appointmentsWithDoctor = appointmentRepository.findByDoctorFirstNameOrDoctorLastNameOrDoctorCityOrDoctorSpecializationOrderByStartDateTimeDesc(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity(), searchDoctorModel.getSpecialization(), PageRequest.of(page, 1));
+        Page<Appointment> appointmentsWithDoctor = appointmentRepository.findByDoctorFirstNameOrDoctorLastNameOrDoctorCityOrDoctorSpecializationOrderByStartDateTimeDesc(searchDoctorModel.getDoctorFirstName(),searchDoctorModel.getDoctorLastName(),searchDoctorModel.getCity(), searchDoctorModel.getSpecialization(), PageRequest.of(page, 10));
         model.addAttribute("searchDoctor", searchDoctorModel);
         model.addAttribute("AppointmentsWithDoctor", appointmentsWithDoctor);
         model.addAttribute("currentPage", page);
