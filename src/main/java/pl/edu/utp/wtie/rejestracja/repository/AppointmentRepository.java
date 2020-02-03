@@ -1,5 +1,6 @@
 package pl.edu.utp.wtie.rejestracja.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -19,6 +20,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     List<Appointment> findAppointmentsByPatientOrderByStartDateTimeDesc(Patient patient);
 
     List<Appointment> findByDoctorOrderByStartDateTime(Doctor doctor);
+
+    List<Appointment> findByDoctorAndStartDateTimeGreaterThanOrderByStartDateTimeDesc(Doctor doctor, Date startDateTime);
 
     Page<Appointment> findByDoctorFirstNameOrDoctorLastNameOrDoctorCityOrDoctorSpecializationOrderByStartDateTimeDesc(String firstName, String lastName, String city, String specialization, Pageable pageable);
 

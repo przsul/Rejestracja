@@ -28,5 +28,24 @@
             </li>
         </ul>
     </nav>
+    <div class="container" th:if="${todayVisits != null && todayVisits.size() > 0}">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Start wizyty</th>
+                <th scope="col">Koniec wizyty</th>
+                <th scope="col">Pacjent</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="visits : ${todayVisits}">
+                <td th:text="${visits.startDateTime}"></td>
+                <td th:text="${visits.endDateTime}"></td>
+                <td th:if="${visits.patient == null}" th:text="${'Brak'}"></td>
+                <td th:if="${visits.patient != null}" th:text="${visits.patient.firstName + ' ' + visits.patient.lastName}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

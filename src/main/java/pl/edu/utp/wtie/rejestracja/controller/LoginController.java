@@ -27,6 +27,9 @@ import pl.edu.utp.wtie.rejestracja.repository.AppointmentRepository;
 import pl.edu.utp.wtie.rejestracja.repository.DoctorRepository;
 import pl.edu.utp.wtie.rejestracja.repository.PatientRepository;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * LoginController
  */
@@ -52,6 +55,13 @@ public class LoginController {
     @GetMapping("/panel")
     public String showLoggedPanel(HttpSession session, Model model, @Valid SearchDoctorModel searchDoctorModel) {
         if (session.getAttribute("doctor-logged") != null){
+            Doctor currentDoctor = doctorRepository.findByEmail(session.getAttribute("doctor-logged").toString());
+            Long time = new Date().getTime();
+            Date date = new Date(time - time % (24 * 60 * 60 * 1000));
+            List<Appointment> todayVisits = appointmentRepository.findByDoctorAndStartDateTimeGreaterThanOrderByStartDateTimeDesc(currentDoctor, date);
+            System.out.println(date);
+            System.out.println(todayVisits);
+            model.addAttribute("todayVisits", todayVisits);
             return "doctor-panel";
         }
 

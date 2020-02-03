@@ -58,7 +58,7 @@
 
         </form>
     </div>
-    <div class="container" th:if="${AppointmentsWithDoctor}">
+    <div class="container" th:if="${AppointmentsWithDoctor != null && AppointmentsWithDoctor.getNumberOfElements() > 0}">
         <table class="table table-bordered">
             <thead>
                 <tr>

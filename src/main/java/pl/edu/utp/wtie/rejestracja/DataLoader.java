@@ -97,12 +97,12 @@ public class DataLoader implements ApplicationRunner {
 
         patientRepository.save(patient);
 
-        Appointment appointment = new Appointment(1L, startDateTime, endDateTime, doctor, patient);
+        Appointment appointment = new Appointment(1L, new Date(), new Date(), doctor, patient);
         appointmentRepository.save(appointment);
 
-        Appointment appointment2 = new Appointment(2L, startDateTime1, endDateTime1, doctor, patient);
+        Appointment appointment2 = new Appointment(2L, new Date(), new Date(), doctor, patient);
         appointmentRepository.save(appointment2);
-        Appointment appointment3 = new Appointment(3L, startDateTime2, endDateTime2, doctor, null);
+        Appointment appointment3 = new Appointment(3L, new Date(), new Date(), doctor, null);
         appointmentRepository.save(appointment3);
     }
 }
