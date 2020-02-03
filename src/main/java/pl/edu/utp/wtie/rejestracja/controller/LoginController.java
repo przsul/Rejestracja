@@ -59,8 +59,6 @@ public class LoginController {
             Long time = new Date().getTime();
             Date date = new Date(time - time % (24 * 60 * 60 * 1000));
             List<Appointment> todayVisits = appointmentRepository.findByDoctorAndStartDateTimeGreaterThanOrderByStartDateTimeDesc(currentDoctor, date);
-            System.out.println(date);
-            System.out.println(todayVisits);
             model.addAttribute("todayVisits", todayVisits);
             return "doctor-panel";
         }

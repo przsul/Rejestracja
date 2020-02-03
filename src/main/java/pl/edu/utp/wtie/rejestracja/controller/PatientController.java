@@ -104,7 +104,6 @@ public class PatientController {
 
         List<Appointment> appointmentsByPatient = appointmentRepository.findAppointmentsByPatientOrderByStartDateTimeDesc(patientRepository.findByEmail(patientEmail));
 
-        System.out.println(appointmentsByPatient.get(0));
         model.addAttribute("patientApointmens", appointmentsByPatient);
 
         return "patient-scheduler";
