@@ -13,5 +13,6 @@ import pl.edu.utp.wtie.rejestracja.model.Patient;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
     Patient findByEmail(String email);
+    Patient findByEmailAndPassword(String email, String password);
     List<Patient> findByEmailOrderById(String email);
 }
