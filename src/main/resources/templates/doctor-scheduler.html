@@ -35,7 +35,7 @@
             <div class="col-sm-4">
                 <form action="#" th:action="@{/addAppointment}" th:object="${appointment}" method="post"
                     class="rounded border border-info p-4">
-                    <h3>Dodaj wizytę</h3>
+                    <h3 class="text-center">Dodaj wizytę</h3>
                     <div class="form-group">
                         <label for="start-date-time">Od kiedy:</label>
                         <input type="datetime-local" th:field="*{startDateTime}" class="form-control"

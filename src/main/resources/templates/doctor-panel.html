@@ -28,8 +28,9 @@
             </li>
         </ul>
     </nav>
-    <div class="container" th:if="${todayVisits != null && todayVisits.size() > 0}">
+    <div id="elo" class="container rounded border border-info p-4 mt-5" th:if="${todayVisits != null && todayVisits.size() > 0}">
         <table class="table table-bordered">
+            <h2 class="text-center pb-2">Dzisiejsze wizyty</h2>
             <thead>
             <tr>
                 <th scope="col">Start wizyty</th>
@@ -39,8 +40,8 @@
             </thead>
             <tbody>
             <tr th:each="visits : ${todayVisits}">
-                <td th:text="${visits.startDateTime}"></td>
-                <td th:text="${visits.endDateTime}"></td>
+                <td th:text="${#dates.format(visits.startDateTime,'dd.MM.yyyy, HH:mm')}"></td>
+                <td th:text="${#dates.format(visits.endDateTime,'dd.MM.yyyy, HH:mm')}"></td>
                 <td th:if="${visits.patient == null}" th:text="${'Brak'}"></td>
                 <td th:if="${visits.patient != null}" th:text="${visits.patient.firstName + ' ' + visits.patient.lastName}"></td>
             </tr>

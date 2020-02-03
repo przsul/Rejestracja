@@ -29,6 +29,7 @@
 
 <div class="container">
     <form action="#" th:object="${doctor}" th:action= "@{/panel/doctor-settings}" method="post" class="rounded border border-info p-4 m-5">
+        <h2 class="text-center">Ustawienia konta</h2>
         <div class="form-group">
             <label for="specialization">Specjalizacja:</label>
             <input type="text" th:field="*{specialization}" class="form-control" id="specialization" placeholder="Wpisz specjalizację" />

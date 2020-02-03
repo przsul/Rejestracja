@@ -37,8 +37,8 @@
                     <th>Data zakończenia wizyty</th>
                 </tr>
                 <tr th:each="patientApointment : ${patientApointmens}">
-                    <td th:text="${patientApointment.doctor.firstName + ' ' + patientApointment.doctor.lastName}"></td>
-                    <td th:text="${patientApointment.startDateTime}"></td>
+                    <td th:utext="${patientApointment.doctor.firstName + ' ' + patientApointment.doctor.lastName}"></td>
+                    <td th:utext="${patientApointment.startDateTime}"></td>
                     <td th:text="${patientApointment.endDateTime}"></td>
                 </tr>
             </table>
