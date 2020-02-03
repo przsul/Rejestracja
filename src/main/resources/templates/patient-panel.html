@@ -23,85 +23,88 @@
                 <a class="nav-link" href="/panel/patient-scheduler">Moje wizyty</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/panel/patient-settings">Ustawienia konta</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="/signout">Wyloguj</a>
             </li>
         </ul>
     </nav>
 
     <div class="container">
-        <form action="#" th:object="${searchDoctor}" th:action="@{'/panel/0'}" method="post"
-            class="rounded border border-info p-4 m-5">
-            <div class="form-group">
-                <label for="firstName">Imię doktora:</label>
-                <input type="text" th:field="*{doctorFirstName}" class="form-control" id="firstName"
-                    placeholder="Wpisz imię doktora" />
+        <div class="row mb-4">
+            <div class="col">
+                <form action="#" th:object="${searchDoctor}" th:action="@{'/panel/0'}" method="post"
+                class="rounded border border-info p-4 mt-5">
+                    <h2 class="text-center">Wyszukaj lekarza</h2>
+                    <div class="form-group">
+                        <label for="firstName">Imię doktora:</label>
+                        <input type="text" th:field="*{doctorFirstName}" class="form-control" id="firstName"
+                            placeholder="Wpisz imię doktora" />
+                    </div>
+                    <div class="form-group">
+                        <label for="currentHospital">Nazwisko doktora:</label>
+                        <input type="text" th:field="*{doctorLastName}" class="form-control" id="currentHospital"
+                            placeholder="Wpisz nazwisko doktora" />
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Miejscowość doktora:</label>
+                        <input type="text" th:field="*{city}" class="form-control" id="city"
+                            placeholder="Wpisz miejscowość doktora" />
+                    </div>
+                    <div class="form-group">
+                        <label for="specialization">Specjalizacja doktora:</label>
+                        <input type="text" th:field="*{specialization}" class="form-control" id="specialization"
+                            placeholder="Wpisz specjalizacje doktora" />
+                    </div>
+                    <button type="submit" value="Submit" class="btn btn-primary">Wyszukaj</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="currentHospital">Nazwisko doktora:</label>
-                <input type="text" th:field="*{doctorLastName}" class="form-control" id="currentHospital"
-                    placeholder="Wpisz nazwisko doktora" />
+        </div>
+        <div class="row mb-4">
+            <div class="col">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Start wizyty</th>
+                            <th scope="col">Koniec wizyty</th>
+                            <th scope="col">Dzień tygodnia</th>
+                            <th scope="col">Imię i nazwisko doktora</th>
+                            <th scope="col">Specjalizacja</th>
+                            <th scope="col">Miasto</th>
+                            <th scope="col">Szpital</th>
+                            <th scope="col">Zapisz</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="appointment : ${AppointmentsWithDoctor}">
+                            <td th:text="${#dates.format(appointment.startDateTime,'dd.MM.yyyy, HH:mm')}"></td>
+                            <td th:text="${#dates.format(appointment.endDateTime,'dd.MM.yyyy, HH:mm')}"></td>
+                            <td th:text="${appointment.dayOfTheWeek}"></td>
+                            <td th:text="${appointment.doctor.firstName + ' ' + appointment.doctor.lastName}"></td>
+                            <td th:text="${appointment.doctor.specialization}"></td>
+                            <td th:text="${appointment.doctor.city}"></td>
+                            <td th:text="${appointment.doctor.currentHospital}"></td>
+                            <td><a th:href="@{'/confirmappointment/' + ${appointment.id}}"><button type="button" class="btn btn-primary"
+                                        th:disabled="${appointment.patient != null}">Zapisz</button></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div th:if="${AppointmentsWithDoctor}">
+                    <form class="mb-2" th:if="${currentPage < (totalPages - 1)}" action="#" th:object="${searchDoctor}" th:action="@{'/panel/' + ${currentPage + 1}}" method="post">
+                        <input class="form-control" type="text" th:field="*{doctorFirstName}" hidden/>
+                        <input class="form-control" type="text" th:field="*{doctorLastName}" hidden/>
+                        <input class="form-control" type="text" th:field="*{city}" hidden/>
+                        <input class="form-control" type="text" th:field="*{specialization}" hidden/>
+                        <button type="submit" value="Submit" class="float-left btn btn-primary">Następna</button>
+                    </form>
+                    <form th:if="${currentPage > 0}" action="#" th:object="${searchDoctor}" th:action="@{'/panel/' + ${currentPage - 1}}" method="post">
+                        <input class="form-control" type="text" th:field="*{doctorFirstName}" hidden/>
+                        <input class="form-control" type="text" th:field="*{doctorLastName}" hidden/>
+                        <input class="form-control" type="text" th:field="*{city}" hidden/>
+                        <input class="form-control" type="text" th:field="*{specialization}" hidden/>
+                        <button type="submit" value="Submit" class="float-right btn btn-primary">Poprzednia</button>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="city">Miejscowość doktora:</label>
-                <input type="text" th:field="*{city}" class="form-control" id="city"
-                    placeholder="Wpisz miejscowość doktora" />
-            </div>
-            <div class="form-group">
-                <label for="specialization">Specjalizacja doktora:</label>
-                <input type="text" th:field="*{specialization}" class="form-control" id="specialization"
-                       placeholder="Wpisz specjalizacje doktora" />
-            </div>
-            <button type="submit" value="Submit" class="btn btn-primary">Wyszukaj</button>
-
-        </form>
-    </div>
-    <div class="container" th:if="${AppointmentsWithDoctor != null && AppointmentsWithDoctor.getNumberOfElements() > 0}">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">Start wizyty</th>
-                    <th scope="col">Koniec wizyty</th>
-                    <th scope="col">Dzień tygodnia</th>
-                    <th scope="col">Imię i nazwisko doktora</th>
-                    <th scope="col">Specjalizacja</th>
-                    <th scope="col">Miasto</th>
-                    <th scope="col">Szpital</th>
-                    <th scope="col">Zapisz</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="appointment : ${AppointmentsWithDoctor}">
-                    <td th:text="${#dates.format(appointment.startDateTime,'dd.MM.yyyy, HH:mm')}"></td>
-                    <td th:text="${#dates.format(appointment.endDateTime,'dd.MM.yyyy, HH:mm')}"></td>
-                    <td th:text="${appointment.dayOfTheWeek}"></td>
-                    <td th:text="${appointment.doctor.firstName + ' ' + appointment.doctor.lastName}"></td>
-                    <td th:text="${appointment.doctor.specialization}"></td>
-                    <td th:text="${appointment.doctor.city}"></td>
-                    <td th:text="${appointment.doctor.currentHospital}"></td>
-                    <td><a th:href="@{'/confirmappointment/' + ${appointment.id}}"><button type="button" class="btn btn-primary"
-                                th:disabled="${appointment.patient != null}">Zapisz</button></a></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <form class="mr-2" th:if="${currentPage < (totalPages - 1)}" action="#" th:object="${searchDoctor}" th:action="@{'/panel/' + ${currentPage + 1}}" method="post">
-            <input type="text" th:field="*{doctorFirstName}" hidden/>
-            <input type="text" th:field="*{doctorLastName}" hidden/>
-            <input type="text" th:field="*{city}" hidden/>
-            <input type="text" th:field="*{specialization}" hidden/>
-            <button type="submit" value="Submit" class="float-left btn btn-primary">Następna</button>
-        </form>
-        <form th:if="${currentPage > 0}" action="#" th:object="${searchDoctor}" th:action="@{'/panel/' + ${currentPage - 1}}" method="post">
-            <input type="text" th:field="*{doctorFirstName}" hidden/>
-            <input type="text" th:field="*{doctorLastName}" hidden/>
-            <input type="text" th:field="*{city}" hidden/>
-            <input type="text" th:field="*{specialization}" hidden/>
-            <button type="submit" value="Submit" class="float-right btn btn-primary">Poprzednia</button>
-        </form>
-
+        </div>
     </div>
 </body>
 
